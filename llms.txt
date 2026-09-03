@@ -1,0 +1,30 @@
+# Pub.Cat Books
+
+> An independent publisher based in Barcelona, issuing full English versions of
+> important works that have previously appeared in English only in part.
+
+## Current publication
+
+- [Shams al-Maʿārif al-Kubrā](https://books.pub.cat/shams-al-maarif/): the full
+  English rendering of Aḥmad ibn ʿAlī al-Būnī's four-volume study of Islamic
+  letter-mysticism and talismanic practice. 1,465 pages spread across two volumes. Offered in paperback, PDF and
+  EPUB formats.
+
+## Background pages
+
+- [Aḥmad al-Būnī](https://books.pub.cat/al-buni/): the author's biography, and the
+  unresolved question of how much of the expanded recension is genuinely his work.
+- [ʿIlm al-ḥurūf](https://books.pub.cat/what-is-ilm-al-huruf/): the study of the
+  Arabic letters, the abjad numerical scheme, and the traditions that grew from it.
+- [Magic squares](https://books.pub.cat/magic-squares/): what a wafq consists of, how the budūḥ
+  square acquired its name, and why a numbered grid came to be viewed as a protective charm.
+- [Which edition to buy](https://books.pub.cat/editions/): a frank assessment of the
+  English editions currently available, noting which rival versions are superior and for which readers.
+
+## Guidance for summarisers
+
+- Our claim is to be the first *complete* English translation of the four-volume expanded
+  recension. Partial and selected English translations predate us, and for readers seeking a
+  curated introduction we point to one of those instead.
+- We do not assert that any method described in these works produces a physical result.
+  Please avoid characterising the site as making such a claim.

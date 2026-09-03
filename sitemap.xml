@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://books.pub.cat/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://books.pub.cat/shams-al-maarif/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://books.pub.cat/shams-al-maarif/read/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://books.pub.cat/al-buni/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://books.pub.cat/what-is-ilm-al-huruf/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://books.pub.cat/magic-squares/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://books.pub.cat/editions/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://books.pub.cat/faq/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://books.pub.cat/about/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://books.pub.cat/contact/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://books.pub.cat/refunds/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://books.pub.cat/privacy/</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://books.pub.cat/terms/</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+</urlset>
