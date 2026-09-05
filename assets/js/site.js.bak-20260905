@@ -17,12 +17,6 @@
      nothing to consent to. */
   var META_PIXEL_ID = "";
 
-  /* Whop's own pixel. Whop runs the Meta ads and records every checkout and
-     purchase server-side; the site only has to report page views and the
-     free-sample lead. Same consent gate as the Meta pixel: nothing loads until
-     the visitor clicks Allow. */
-  var WHOP_BIZ_ID = "biz_l1sR4RzKzCfYlf";
-
   var STORE_KEY = "pubcat-books-consent";
 
   function readConsent() {
@@ -79,7 +73,6 @@
         .then(function (res) {
           if (res.ok) {
             form.hidden = true;
-            if (window.whop && form.id === "sample-form") { try { window.whop.track("lead"); } catch (e) {} }
             note.textContent = form.id === "sample-form"
               ? "Thank you. The sample is on its way to " + input.value.trim() + "."
               : "Thank you. You are on the list.";
@@ -97,21 +90,7 @@
 
   /* ------------------------------------------------------ the Meta pixel */
 
-  function loadWhopPixel() {
-    if (!WHOP_BIZ_ID || window.whop) return;
-    /* eslint-disable */
-    !function(w,d,s,u,n,a,b){if(w[n])return;a=w[n]={q:[],t:+new Date,s:[],o:u,track:function(){a.q.push([+new Date].concat([].slice.call(arguments)))},setScope:function(){a.s=[].slice.call(arguments).filter(function(x){return typeof x==="string"});a.q.push([+new Date,"setScope"].concat(a.s))},scope:function(){var c=[].slice.call(arguments);return{track:function(){a.q.push([+new Date].concat([].slice.call(arguments)).concat([{__scope:c}]))}}}};b=d.createElement(s);b.async=1;b.src=u+"/s.js";d.getElementsByTagName(s)[0].parentNode.insertBefore(b,d.getElementsByTagName(s)[0])}(window,document,"script","https://t.whop.tw","whop");
-    /* eslint-enable */
-    window.whop.setScope(WHOP_BIZ_ID);
-    window.whop.track("page");
-  }
-
-  function loadPixels() {
-    loadWhopPixel();
-    loadMetaPixel();
-  }
-
-  function loadMetaPixel() {
+  function loadPixel() {
     if (!META_PIXEL_ID || window.fbq) return;
     /* eslint-disable */
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -125,9 +104,9 @@
   }
 
   function banner() {
-    if (!META_PIXEL_ID && !WHOP_BIZ_ID) return;   /* nothing to consent to yet */
+    if (!META_PIXEL_ID) return;            /* nothing to consent to yet */
     if (readConsent()) {
-      if (readConsent() === "granted") loadPixels();
+      if (readConsent() === "granted") loadPixel();
       return;
     }
     var bar = document.createElement("div");
@@ -149,7 +128,7 @@
       if (!choice) return;
       writeConsent(choice);
       bar.parentNode.removeChild(bar);
-      if (choice === "granted") loadPixels();
+      if (choice === "granted") loadPixel();
     });
   }
 
