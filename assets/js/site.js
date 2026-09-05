@@ -79,7 +79,7 @@
         .then(function (res) {
           if (res.ok) {
             form.hidden = true;
-            if (window.whop && form.id === "sample-form") { try { window.whop.track("lead"); } catch (e) {} }
+            if (window.whop && form.id === "sample-form") { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
             note.textContent = form.id === "sample-form"
               ? "Thank you. The sample is on its way to " + input.value.trim() + "."
               : "Thank you. You are on the list.";
