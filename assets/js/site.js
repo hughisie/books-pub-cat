@@ -96,7 +96,7 @@
               note.appendChild(dl);
               dl.focus();
             } else if (isSample) {
-              note.textContent = "Thank you. The download link did not come back; email books@pub.cat and we will send it by hand.";
+              note.textContent = "Thank you. The download link did not come back; email owen@pub.cat and we will send it by hand.";
             } else {
               note.textContent = "Thank you. You are on the list.";
             }
