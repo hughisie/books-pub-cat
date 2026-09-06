@@ -1,9 +1,11 @@
-/* books.pub.cat — email capture and the consent-gated Meta pixel.
+/* books.pub.cat — email capture and the consent-gated advertising pixels.
  *
  * Two rules this file exists to keep:
- *   1. The privacy page promises "you will be asked before it loads" about the
- *      advertising pixel, with no geographic exception. So the pixel loads only
- *      after an explicit click, for every visitor, everywhere.
+ *   1. The privacy page promises that visitors in the EU, the EEA, the UK and
+ *      Switzerland are asked before the advertising pixel loads, and that
+ *      everyone else gets it on the first visit with a switch-off link on the
+ *      privacy page. Owen's decision, 7 Sep 2026. The country comes from a
+ *      Pub.Cat endpoint; if it cannot be reached we ask, never assume.
  *   2. The forms must actually deliver. They post to the Pub.Cat endpoint and
  *      report success or failure in the page rather than silently doing nothing.
  */
@@ -24,6 +26,10 @@
   var WHOP_BIZ_ID = "biz_l1sR4RzKzCfYlf";
 
   var STORE_KEY = "pubcat-books-consent";
+
+  /* Shown under the privacy page's switch-off link once it has been clicked.
+     Paraphrased through DeepSeek per the publishing rule, 7 Sep 2026. */
+  var OPTOUT_DONE = "All done. The advertising pixel will not load again in this browser unless you clear your browser storage.";
 
   function readConsent() {
     try { return window.localStorage.getItem(STORE_KEY); }
@@ -141,12 +147,56 @@
     window.fbq('track', 'PageView');
   }
 
+  /* Consent geography (Owen, 7 Sep 2026). A stored choice always wins. With no
+     stored choice, a tiny Pub.Cat endpoint reports which country the visitor is
+     in from Cloudflare's header: the EU, the EEA, the UK and Switzerland get
+     the banner and nothing loads until they click Allow; everywhere else the
+     pixels load at once with no banner, and the privacy page carries the
+     switch-off link. If the lookup fails or is slow, we ask; asking is the
+     safe default. */
+  var GEO_ENDPOINT = "https://mcp.pub.cat/books/geo";
+
   function banner() {
     if (!META_PIXEL_ID && !WHOP_BIZ_ID) return;   /* nothing to consent to yet */
-    if (readConsent()) {
-      if (readConsent() === "granted") loadPixels();
+    var stored = readConsent();
+    if (stored) {
+      if (stored === "granted") loadPixels();
       return;
     }
+    var decided = false;
+    function ask() { if (decided) return; decided = true; showBanner(); }
+    function allow() { if (decided) return; decided = true; loadPixels(); }
+    try {
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); ask(); }, 2500);
+      window.fetch(GEO_ENDPOINT, { signal: ctrl ? ctrl.signal : undefined, credentials: "omit" })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (g) {
+          clearTimeout(timer);
+          if (g && g.consent_required === false) allow(); else ask();
+        })
+        .catch(function () { clearTimeout(timer); ask(); });
+    } catch (e) { ask(); }
+  }
+
+  /* The switch-off link on the privacy page: <a data-consent-optout>. */
+  function optOutLinks() {
+    var links = document.querySelectorAll("[data-consent-optout]");
+    if (!links.length) return;
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        writeConsent("denied");
+        var note = document.createElement("p");
+        note.className = "small";
+        note.setAttribute("role", "status");
+        note.textContent = OPTOUT_DONE;
+        a.parentNode.parentNode.insertBefore(note, a.parentNode.nextSibling);
+      });
+    });
+  }
+
+  function showBanner() {
     var bar = document.createElement("div");
     bar.className = "consent-bar";
     bar.setAttribute("role", "dialog");
@@ -254,6 +304,7 @@
     wireForm(document.getElementById("signup"));
     Array.prototype.forEach.call(document.querySelectorAll('form[id^="sample"]'), wireForm);
     banner();
+    optOutLinks();
     lightbox();
   }
 
