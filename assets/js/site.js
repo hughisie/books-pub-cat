@@ -79,10 +79,27 @@
         .then(function (res) {
           if (res.ok) {
             form.hidden = true;
-            if (window.whop && form.id === "sample-form") { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
-            note.textContent = form.id === "sample-form"
-              ? "Thank you. The sample is on its way to " + input.value.trim() + "."
-              : "Thank you. You are on the list.";
+            var isSample = /^sample/.test(form.id || "");
+            if (window.whop && isSample) { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
+            if (isSample && res.j && res.j.sample_url) {
+              /* the server hands back the hosted PDF; show it right here rather
+                 than promising an email that nothing sends yet */
+              note.textContent = "Your sample is ready.";
+              var dl = document.createElement("a");
+              dl.className = "btn btn-primary";
+              dl.href = res.j.sample_url;
+              dl.target = "_blank";
+              dl.rel = "noopener";
+              dl.textContent = "Open the 30-page sample (PDF)";
+              dl.style.cssText = "display:inline-block;margin-top:.7rem";
+              note.appendChild(document.createElement("br"));
+              note.appendChild(dl);
+              dl.focus();
+            } else if (isSample) {
+              note.textContent = "Thank you. The download link did not come back; email books@pub.cat and we will send it by hand.";
+            } else {
+              note.textContent = "Thank you. You are on the list.";
+            }
           } else {
             throw new Error((res.j && res.j.error) || "failed");
           }
@@ -153,10 +170,91 @@
     });
   }
 
+
+  /* ------------------------------------------------------------ lightbox
+     Any <a class="zoom" href="large.webp"> opens its target full-screen.
+     Scroll wheel or pinch to zoom, drag to pan, Esc or a click outside closes. */
+  function lightbox() {
+    var links = document.querySelectorAll("a.zoom");
+    if (!links.length) return;
+    var box = document.createElement("div");
+    box.className = "lb";
+    box.hidden = true;
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", "Enlarged image");
+    box.innerHTML =
+      '<button class="lb-close" type="button" aria-label="Close">&times;</button>' +
+      '<div class="lb-stage"><img alt="" draggable="false"></div>' +
+      '<p class="lb-cap"></p>' +
+      '<p class="lb-hint">Scroll or pinch to zoom in, drag to move around, Esc to close</p>';
+    document.body.appendChild(box);
+    var stage = box.querySelector(".lb-stage");
+    var img = box.querySelector("img");
+    var cap = box.querySelector(".lb-cap");
+    var closeBtn = box.querySelector(".lb-close");
+    var scale = 1, tx = 0, ty = 0, drag = false, sx = 0, sy = 0, pinch = null, last = null, moved = false;
+
+    function apply() { img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")"; }
+    function setScale(v) { scale = Math.min(6, Math.max(1, v)); if (scale === 1) { tx = 0; ty = 0; } apply(); }
+    function open(a) {
+      last = document.activeElement;
+      img.src = a.getAttribute("href");
+      var small = a.querySelector("img");
+      img.alt = small ? small.alt : "";
+      var fig = a.closest ? a.closest("figure") : null;
+      var fc = fig && fig.querySelector("figcaption");
+      cap.textContent = a.getAttribute("data-caption") || (fc ? fc.textContent : "");
+      scale = 1; tx = 0; ty = 0; apply();
+      box.hidden = false;
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+    function close() {
+      box.hidden = true;
+      document.body.style.overflow = "";
+      img.removeAttribute("src");
+      if (last && last.focus) last.focus();
+    }
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener("click", function (ev) { ev.preventDefault(); open(a); });
+    });
+    closeBtn.addEventListener("click", close);
+    box.addEventListener("click", function (ev) { if (ev.target === box || ev.target === cap) close(); });
+    stage.addEventListener("click", function (ev) { if (ev.target === stage && !moved) close(); });
+    document.addEventListener("keydown", function (ev) { if (!box.hidden && ev.key === "Escape") close(); });
+    stage.addEventListener("wheel", function (ev) {
+      ev.preventDefault();
+      setScale(scale * (ev.deltaY < 0 ? 1.15 : 1 / 1.15));
+    }, { passive: false });
+    img.addEventListener("dblclick", function () { setScale(scale > 1 ? 1 : 2.5); });
+    stage.addEventListener("pointerdown", function (ev) {
+      if (scale === 1 || ev.pointerType === "touch" && pinch) return;
+      drag = true; moved = false; sx = ev.clientX - tx; sy = ev.clientY - ty;
+      try { stage.setPointerCapture(ev.pointerId); } catch (e) {}
+    });
+    stage.addEventListener("pointermove", function (ev) {
+      if (!drag) return;
+      moved = true; tx = ev.clientX - sx; ty = ev.clientY - sy; apply();
+    });
+    function endDrag() { drag = false; setTimeout(function () { moved = false; }, 50); }
+    stage.addEventListener("pointerup", endDrag);
+    stage.addEventListener("pointercancel", endDrag);
+    function dist(t) { var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY; return Math.sqrt(dx * dx + dy * dy); }
+    stage.addEventListener("touchstart", function (ev) {
+      if (ev.touches.length === 2) { drag = false; pinch = { d: dist(ev.touches), s: scale }; }
+    }, { passive: true });
+    stage.addEventListener("touchmove", function (ev) {
+      if (pinch && ev.touches.length === 2) { ev.preventDefault(); setScale(pinch.s * dist(ev.touches) / pinch.d); }
+    }, { passive: false });
+    stage.addEventListener("touchend", function (ev) { if (ev.touches.length < 2) pinch = null; });
+  }
+
   function start() {
     wireForm(document.getElementById("signup"));
-    wireForm(document.getElementById("sample-form"));
+    Array.prototype.forEach.call(document.querySelectorAll('form[id^="sample"]'), wireForm);
     banner();
+    lightbox();
   }
 
   if (document.readyState === "loading") {
