@@ -96,7 +96,9 @@
               dl.href = res.j.sample_url;
               dl.target = "_blank";
               dl.rel = "noopener";
-              dl.textContent = "Open the 30-page sample (PDF)";
+              /* a page with a different sample names it on the form:
+                 <form data-download-label="..."> (added 28 Sep 2026 for al-Dayrabī) */
+              dl.textContent = form.getAttribute("data-download-label") || "Open the 30-page sample (PDF)";
               dl.style.cssText = "display:inline-block;margin-top:.7rem";
               note.appendChild(document.createElement("br"));
               note.appendChild(dl);
