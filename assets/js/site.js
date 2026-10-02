@@ -27,9 +27,68 @@
 
   var STORE_KEY = "pubcat-books-consent";
 
-  /* Shown under the privacy page's switch-off link once it has been clicked.
-     Paraphrased through DeepSeek per the publishing rule, 7 Sep 2026. */
-  var OPTOUT_DONE = "All done. The advertising pixel will not load again in this browser unless you clear your browser storage.";
+  /* Every visible string, per language (2 Oct 2026). The English is the copy that was
+     already live; Spanish and Catalan are DeepSeek's translations, written in here by
+     tools/i18n/build.py js. Do not edit between the markers by hand. */
+  /* I18N:BEGIN */
+  var I18N = {
+    "en": {
+      "js_sending": "Sending…",
+      "js_ready": "Your sample is ready.",
+      "js_open_sample": "Open the 30-page sample (PDF)",
+      "js_no_link": "Thank you. The download link did not come back; email owen@pub.cat and we will send it by hand.",
+      "js_listed": "Thank you. You are on the list.",
+      "js_failed": "That did not go through. Please email us instead and we will add you by hand.",
+      "js_optout_done": "All done. The advertising pixel will not load again in this browser unless you clear your browser storage.",
+      "js_consent_label": "Advertising cookie",
+      "js_consent_text": "We would like to set one advertising cookie, so that we are not paying to show an advert to someone who has already bought the book. Nothing else on this site uses cookies.",
+      "js_consent_link": "What we collect",
+      "js_no_thanks": "No thanks",
+      "js_allow": "Allow",
+      "js_lb_label": "Enlarged image",
+      "js_lb_close": "Close",
+      "js_lb_hint": "Scroll or pinch to zoom in, drag to move around, Esc to close"
+    },
+    "es": {
+      "js_sending": "Enviando…",
+      "js_ready": "Tu muestra está lista.",
+      "js_open_sample": "Abrir la muestra de 30 páginas (PDF)",
+      "js_no_link": "Gracias. El enlace de descarga no ha llegado; escribe a owen@pub.cat y te lo enviaremos a mano.",
+      "js_listed": "Gracias. Ya estás en la lista.",
+      "js_failed": "No se ha podido completar. Escríbenos por correo y te añadiremos a mano.",
+      "js_optout_done": "Ya está. El píxel publicitario no volverá a cargarse en este navegador a menos que borres el almacenamiento del navegador.",
+      "js_consent_label": "Cookie publicitaria",
+      "js_consent_text": "Nos gustaría instalar una cookie publicitaria, para no pagar por mostrar un anuncio a alguien que ya ha comprado el libro. Nada más en este sitio utiliza cookies.",
+      "js_consent_link": "Qué recopilamos",
+      "js_no_thanks": "No, gracias",
+      "js_allow": "Permitir",
+      "js_lb_label": "Imagen ampliada",
+      "js_lb_close": "Cerrar",
+      "js_lb_hint": "Desplázate o pellizca para ampliar, arrastra para moverte, Esc para cerrar"
+    },
+    "ca": {
+      "js_sending": "S'està enviant…",
+      "js_ready": "La teva mostra ja està a punt.",
+      "js_open_sample": "Obre la mostra de 30 pàgines (PDF)",
+      "js_no_link": "Gràcies. L'enllaç de descàrrega no ha arribat; escriu a owen@pub.cat i te'l farem arribar manualment.",
+      "js_listed": "Gràcies. Ja ets a la llista.",
+      "js_failed": "No s'ha pogut completar. Escriu-nos directament i t'afegirem manualment.",
+      "js_optout_done": "Fet. El píxel publicitari no es tornarà a carregar en aquest navegador tret que esborris l'emmagatzematge del navegador.",
+      "js_consent_label": "Galeta publicitària",
+      "js_consent_text": "Voldríem instal·lar una galeta publicitària, per no pagar per mostrar un anunci a algú que ja ha comprat el llibre. Cap altra part d'aquest lloc utilitza galetes.",
+      "js_consent_link": "Què recollim",
+      "js_no_thanks": "No, gràcies",
+      "js_allow": "Permet",
+      "js_lb_label": "Imatge ampliada",
+      "js_lb_close": "Tanca",
+      "js_lb_hint": "Fes scroll o pessiga per ampliar, arrossega per moure't, Esc per tancar"
+    }
+  };
+  /* I18N:END */
+  var LANG = ((document.documentElement.getAttribute("lang") || "en").slice(0, 2)).toLowerCase();
+  if (!I18N[LANG]) LANG = "en";
+  var PREFIX = LANG === "en" ? "" : "/" + LANG;
+  function T(k) { return (I18N[LANG] && I18N[LANG][k]) || (I18N.en && I18N.en[k]) || ""; }
 
   function readConsent() {
     try { return window.localStorage.getItem(STORE_KEY); }
@@ -68,7 +127,7 @@
       if (!input || !input.value) return;
 
       var original = button ? button.textContent : "";
-      if (button) { button.disabled = true; button.textContent = "Sending…"; }
+      if (button) { button.disabled = true; button.textContent = T("js_sending"); }
       note.hidden = false;
       note.textContent = "";
 
@@ -90,7 +149,7 @@
             if (isSample && res.j && res.j.sample_url) {
               /* the server hands back the hosted PDF; show it right here rather
                  than promising an email that nothing sends yet */
-              note.textContent = "Your sample is ready.";
+              note.textContent = T("js_ready");
               var dl = document.createElement("a");
               dl.className = "btn btn-primary";
               dl.href = res.j.sample_url;
@@ -98,23 +157,22 @@
               dl.rel = "noopener";
               /* a page with a different sample names it on the form:
                  <form data-download-label="..."> (added 28 Sep 2026 for al-Dayrabī) */
-              dl.textContent = form.getAttribute("data-download-label") || "Open the 30-page sample (PDF)";
+              dl.textContent = form.getAttribute("data-download-label") || T("js_open_sample");
               dl.style.cssText = "display:inline-block;margin-top:.7rem";
               note.appendChild(document.createElement("br"));
               note.appendChild(dl);
               dl.focus();
             } else if (isSample) {
-              note.textContent = "Thank you. The download link did not come back; email owen@pub.cat and we will send it by hand.";
+              note.textContent = T("js_no_link");
             } else {
-              note.textContent = "Thank you. You are on the list.";
+              note.textContent = T("js_listed");
             }
           } else {
             throw new Error((res.j && res.j.error) || "failed");
           }
         })
         .catch(function () {
-          note.textContent =
-            "That did not go through. Please email us instead and we will add you by hand.";
+          note.textContent = T("js_failed");
           if (button) { button.disabled = false; button.textContent = original; }
         });
     });
@@ -192,7 +250,7 @@
         var note = document.createElement("p");
         note.className = "small";
         note.setAttribute("role", "status");
-        note.textContent = OPTOUT_DONE;
+        note.textContent = T("js_optout_done");
         a.parentNode.parentNode.insertBefore(note, a.parentNode.nextSibling);
       });
     });
@@ -202,15 +260,13 @@
     var bar = document.createElement("div");
     bar.className = "consent-bar";
     bar.setAttribute("role", "dialog");
-    bar.setAttribute("aria-label", "Advertising cookie");
+    bar.setAttribute("aria-label", T("js_consent_label"));
     bar.innerHTML =
       '<div class="consent-inner">' +
-      '<p>We would like to set one advertising cookie, so that we are not paying to ' +
-      'show an advert to someone who has already bought the book. Nothing else on this ' +
-      'site uses cookies. <a href="/privacy/">What we collect</a>.</p>' +
+      '<p>' + T("js_consent_text") + ' <a href="' + PREFIX + '/privacy/">' + T("js_consent_link") + '</a>.</p>' +
       '<div class="consent-actions">' +
-      '<button type="button" class="btn" data-consent="denied">No thanks</button>' +
-      '<button type="button" class="btn btn-primary" data-consent="granted">Allow</button>' +
+      '<button type="button" class="btn" data-consent="denied">' + T("js_no_thanks") + '</button>' +
+      '<button type="button" class="btn btn-primary" data-consent="granted">' + T("js_allow") + '</button>' +
       '</div></div>';
     document.body.appendChild(bar);
     bar.addEventListener("click", function (ev) {
@@ -234,12 +290,12 @@
     box.hidden = true;
     box.setAttribute("role", "dialog");
     box.setAttribute("aria-modal", "true");
-    box.setAttribute("aria-label", "Enlarged image");
+    box.setAttribute("aria-label", T("js_lb_label"));
     box.innerHTML =
-      '<button class="lb-close" type="button" aria-label="Close">&times;</button>' +
+      '<button class="lb-close" type="button" aria-label="' + T("js_lb_close") + '">&times;</button>' +
       '<div class="lb-stage"><img alt="" draggable="false"></div>' +
       '<p class="lb-cap"></p>' +
-      '<p class="lb-hint">Scroll or pinch to zoom in, drag to move around, Esc to close</p>';
+      '<p class="lb-hint">' + T("js_lb_hint") + '</p>';
     document.body.appendChild(box);
     var stage = box.querySelector(".lb-stage");
     var img = box.querySelector("img");
@@ -303,8 +359,9 @@
   }
 
   function start() {
-    wireForm(document.getElementById("signup"));
-    Array.prototype.forEach.call(document.querySelectorAll('form[id^="sample"]'), wireForm);
+    /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
+       the id is the source value the server and the email sequences match on */
+    Array.prototype.forEach.call(document.querySelectorAll('form[id^="signup"], form[id^="sample"]'), wireForm);
     banner();
     optOutLinks();
     lightbox();

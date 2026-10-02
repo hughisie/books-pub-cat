@@ -1,16 +1,291 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://books.pub.cat/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://books.pub.cat/shams-al-maarif/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://books.pub.cat/shams-al-maarif/read/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://books.pub.cat/al-buni/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://books.pub.cat/what-is-ilm-al-huruf/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://books.pub.cat/magic-squares/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://books.pub.cat/editions/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://books.pub.cat/faq/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://books.pub.cat/about/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://books.pub.cat/contact/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://books.pub.cat/refunds/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://books.pub.cat/privacy/</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://books.pub.cat/terms/</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://books.pub.cat/</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/"/>
+  </url>
+  <url><loc>https://books.pub.cat/books/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/books/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/books/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/books/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/books/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/books/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/books/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/books/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/books/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/books/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/books/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/books/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/books/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/books/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/books/"/>
+  </url>
+  <url><loc>https://books.pub.cat/shams-al-maarif/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/shams-al-maarif/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/shams-al-maarif/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/"/>
+  </url>
+  <url><loc>https://books.pub.cat/shams-al-maarif/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/shams-al-maarif/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/shams-al-maarif/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/shams-al-maarif/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/shams-al-maarif/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/mujarrabat-al-dayrabi/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/mujarrabat-al-dayrabi/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/mujarrabat-al-dayrabi/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/"/>
+  </url>
+  <url><loc>https://books.pub.cat/mujarrabat-al-dayrabi/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/mujarrabat-al-dayrabi/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/mujarrabat-al-dayrabi/read/</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/mujarrabat-al-dayrabi/read/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/mujarrabat-al-dayrabi/read/"/>
+  </url>
+  <url><loc>https://books.pub.cat/al-buni/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/al-buni/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/al-buni/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/al-buni/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/al-buni/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/al-buni/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/al-buni/"/>
+  </url>
+  <url><loc>https://books.pub.cat/what-is-ilm-al-huruf/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/what-is-ilm-al-huruf/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/what-is-ilm-al-huruf/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/what-is-ilm-al-huruf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/what-is-ilm-al-huruf/"/>
+  </url>
+  <url><loc>https://books.pub.cat/magic-squares/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/magic-squares/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/magic-squares/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/magic-squares/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/magic-squares/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/magic-squares/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/magic-squares/"/>
+  </url>
+  <url><loc>https://books.pub.cat/editions/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/editions/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/editions/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/editions/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/editions/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/editions/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/editions/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/editions/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/editions/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/editions/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/editions/</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/editions/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/editions/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/editions/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/editions/"/>
+  </url>
+  <url><loc>https://books.pub.cat/about/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/about/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/about/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/about/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/about/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/about/"/>
+  </url>
+  <url><loc>https://books.pub.cat/faq/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/faq/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/faq/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/faq/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/faq/</loc><priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/faq/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/faq/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/faq/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/faq/"/>
+  </url>
+  <url><loc>https://books.pub.cat/contact/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/contact/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/contact/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/contact/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/contact/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/contact/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/contact/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/contact/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/contact/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/contact/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/contact/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/contact/"/>
+  </url>
+  <url><loc>https://books.pub.cat/refunds/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/refunds/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/refunds/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/refunds/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/refunds/</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/refunds/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/refunds/"/>
+  </url>
+  <url><loc>https://books.pub.cat/privacy/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/privacy/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/privacy/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/privacy/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/privacy/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/privacy/"/>
+  </url>
+  <url><loc>https://books.pub.cat/terms/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/terms/"/>
+  </url>
+  <url><loc>https://books.pub.cat/es/terms/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/terms/"/>
+  </url>
+  <url><loc>https://books.pub.cat/ca/terms/</loc><priority>0.2</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://books.pub.cat/terms/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://books.pub.cat/es/terms/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/terms/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/terms/"/>
+  </url>
 </urlset>
