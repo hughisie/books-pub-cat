@@ -1,14 +1,19 @@
 User-agent: *
 Allow: /
+Disallow: /tools/
 
 # AI crawlers are welcome. The reference pages are meant to be cited.
 User-agent: GPTBot
 Allow: /
+Disallow: /tools/
 User-agent: ClaudeBot
 Allow: /
+Disallow: /tools/
 User-agent: PerplexityBot
 Allow: /
+Disallow: /tools/
 User-agent: Google-Extended
 Allow: /
+Disallow: /tools/
 
 Sitemap: https://books.pub.cat/sitemap.xml

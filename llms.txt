@@ -3,12 +3,19 @@
 > An independent publisher based in Barcelona, issuing full English versions of
 > important works that have previously appeared in English only in part.
 
-## Current publication
+## Current publications
 
 - [Shams al-Maʿārif al-Kubrā](https://books.pub.cat/shams-al-maarif/): the full
   English rendering of Aḥmad ibn ʿAlī al-Būnī's four-volume study of Islamic
   letter-mysticism and talismanic practice. 1,443 pages spread across two volumes. Offered in paperback, PDF and
   EPUB formats.
+
+- [Mujarrabāt al-Dayrabī](https://books.pub.cat/mujarrabat-al-dayrabi/): the first translation into English of Aḥmad ibn ʿUmar al-Dayrabī's eighteenth-century Cairo manual of tried and tested practices, together with the Mujarrabāt of al-Sanūsī from its margin. Available as digital (PDF and EPUB), Kindle and paperback editions.
+- [Books](https://books.pub.cat/books/): the complete list, covering all formats and prices.
+
+## Languages
+
+The site can also be read in Spanish (https://books.pub.cat/es/) and Catalan (https://books.pub.cat/ca/). The books are published in English.
 
 ## Background pages
 
