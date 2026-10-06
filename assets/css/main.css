@@ -354,6 +354,14 @@ a.zoom::after{content:"";position:absolute;right:.55rem;bottom:.55rem;width:1.7r
   .capture-hero .small{font-size:.85rem;line-height:1.45;margin:.6rem 0 0}
 }
 .capture .btn-next{display:inline-block;margin-top:.5rem}
+/* After sign-up: paperback, Kindle and direct as three equal buttons (7 Oct 2026) */
+.next-offers{margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--ink-line)}
+.next-offers .next-head{margin:0 0 .7rem;font-size:.98rem}
+.next-offers .next-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:.6rem}
+.next-offers .next-grid .btn{display:flex;align-items:center;justify-content:center}
+.next-offers .next-grid .btn{width:100%;text-align:center;white-space:normal;line-height:1.3;padding:.75rem .6rem}
+.next-offers .next-foot{margin:.7rem 0 0}
+@media (max-width:760px){.next-offers .next-grid{grid-template-columns:1fr}}
 /* one-line reassurance right under the button */
 .capture .trust{font-size:.88rem;color:var(--parchment-dim);margin:.55rem 0 0;line-height:1.4}
 

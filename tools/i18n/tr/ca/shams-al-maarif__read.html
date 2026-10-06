@@ -7,7 +7,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <figure class="plate-figure">
-          <a class="zoom" href="/assets/img/plate-talisman-1600.webp"><img src="/assets/img/plate-talisman.webp" width="660" height="1004" alt="Una pàgina de l'edició del Caire de Shams al-Maʿārif, amb una gran figura talismànica circular dins d'un marc rectangular entre el text àrab" fetchpriority="high"></a>
+          <a class="zoom" href="/assets/img/plate-talisman-1600.webp"><img src="/assets/img/plate-talisman.webp" srcset="/assets/img/plate-talisman-640.webp 424w, /assets/img/plate-talisman.webp 660w" sizes="(max-width: 760px) 260px, 420px" width="660" height="1004" alt="Una pàgina de l'edició del Caire de Shams al-Maʿārif, amb una gran figura talismànica circular dins d'un marc rectangular entre el text àrab" fetchpriority="high"></a>
           <figcaption>Una imatge definitòria de l'edició del Caire, que es troba a la pàgina 20 de l'escanejat. L'edició conté 483 pàgines com aquesta en total.</figcaption>
         </figure>
         <div class="hero-copy">
@@ -15,12 +15,12 @@
           <h1>Abans de fer cap compra, llegeix 30 pàgines del Shams al-Maʿārif complet.</h1>
           <p class="lede">El prefaci del traductor obre el volum, seguit de les primeres pàgines de la Primera Part, que expliquen les lletres i els seus valors numèrics. Després es ressegueix un sol quadrat màgic des de les indicacions inicials de construcció fins a la il·lustració acabada.</p>
           <div class="capture capture-hero">
-            <form method="post" id="sample-form" action="https://mcp.pub.cat/books/subscribe">
+            <form method="post" id="sample-form" action="https://mcp.pub.cat/books/subscribe" data-next-offers="next-offers">
               <label class="skip" for="email-sample">Adreça electrònica</label>
-              <input type="email" id="email-sample" name="email" placeholder="you@example.com" required autocomplete="email">
+              <input type="email" id="email-sample" name="email" placeholder="you@example.com" required autocomplete="email" enterkeyhint="send">
               <button class="btn btn-primary" type="submit">Envia'm la mostra</button>
             </form>
-            <p class="small dim">L'enllaç de descàrrega es fa visible aquí tan bon punt feu clic al botó. La vostra adreça només s'utilitza per a uns quants missatges l'any sobre novetats, i un sol clic els cancel·larà.</p>
+            <p class="trust">No hi ha cap cost i no cal cap informació de pagament. Tan bon punt premeu el botó, l'enllaç al PDF apareix en aquesta pàgina. Després rebreu només uns quants correus l'any per informar-vos de novetats, i una resposta que contingui la paraula unsubscribe els aturarà.</p>
           </div>
         </div>
       </div>
@@ -68,13 +68,22 @@
     <div class="wrap narrow">
       <div class="capture">
         <h2 style="font-size:1.4rem;margin-top:0">La mostra és el que més importa. Proveu-la i després decidiu.</h2>
-        <form method="post" id="sample-form-2" action="https://mcp.pub.cat/books/subscribe">
+        <form method="post" id="sample-form-2" action="https://mcp.pub.cat/books/subscribe" data-next-offers="next-offers">
           <label class="skip" for="email-sample-2">Adreça electrònica</label>
-          <input type="email" id="email-sample-2" name="email" placeholder="you@example.com" required autocomplete="email">
+          <input type="email" id="email-sample-2" name="email" placeholder="you@example.com" required autocomplete="email" enterkeyhint="send">
           <button class="btn btn-primary" type="submit">Envieu-me la mostra</button>
         </form>
       </div>
       <p class="small dim" style="margin-top:1.5rem">Ja us heu decidit? <a href="/shams-al-maarif/#buy">Les edicions són aquí.</a></p>
     </div>
   </section>
+    <div class="next-offers" id="next-offers" hidden>
+      <p class="next-head">Hi ha tres formats disponibles per al llibre complet. Trieu el que us vagi millor:</p>
+      <div class="next-grid">
+        <a class="btn btn-ghost" href="https://www.amazon.com/dp/B0HHZL6SVS?maas=maas_adg_14D22B8E9D42720BE281FB5B711B80C1_afap_abs&amp;ref_=aa_maas&amp;tag=maas">En rústica, $34.99 per volum, via Amazon</a>
+        <a class="btn btn-ghost" href="https://www.amazon.com/dp/B0H12C7HNN?maas=maas_adg_037A1CE751776AA305493F93A1F20AE8_afap_abs&amp;ref_=aa_maas&amp;tag=maas">Kindle, $12.99 per a l'obra completa, via Amazon</a>
+        <a class="btn btn-ghost" href="https://whop.com/checkout/ch_XjOvjvqIc5jslDH/?utm_source=books.pub.cat&amp;utm_medium=signup-panel&amp;utm_campaign=shams">PDF i EPUB, $24, comprats directament a nosaltres</a>
+      </div>
+      <p class="small dim next-foot">El llibre en rústica es publica en dos volums. <a href="https://www.amazon.com/dp/B0HHZL6SVS?maas=maas_adg_14D22B8E9D42720BE281FB5B711B80C1_afap_abs&amp;ref_=aa_maas&amp;tag=maas">Volum u</a> i <a href="https://www.amazon.com/dp/B0HJ3V5GVB?maas=maas_adg_47E28737A5B1C8121E34065094210C7E_afap_abs&amp;ref_=aa_maas&amp;tag=maas">Volum dos</a> apareixen per separat a Amazon, i <a href="/shams-al-maarif/#buy">la pàgina del llibre</a> llista totes les edicions i els preus.</p>
+    </div>
 </main>

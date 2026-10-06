@@ -171,8 +171,8 @@ def set_chrome(s, t, lang, path, current, slim):
     s = re.sub(r"\n<!-- hreflang -->.*?<!-- /hreflang -->", "", s, flags=re.S)
     if path in ALL:
         s = re.sub(r'(<link rel="canonical"[^>]*>)', lambda m: m.group(1) + "\n" + hreflang(path), s, count=1)
-    s = re.sub(r'main\.css(\?v=[\w]+)?"', 'main.css?v=20261006a"', s)
-    s = re.sub(r'site\.js(\?v=[\w]+)?"', 'site.js?v=20261006a"', s)
+    s = re.sub(r'main\.css(\?v=[\w]+)?"', 'main.css?v=20261007a"', s)
+    s = re.sub(r'site\.js(\?v=[\w]+)?"', 'site.js?v=20261007a"', s)
     return s
 
 

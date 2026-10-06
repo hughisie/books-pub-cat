@@ -7,7 +7,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <figure class="plate-figure">
-          <a class="zoom" href="/assets/img/dayrabi-plate-square-1600.webp"><img src="/assets/img/dayrabi-plate-square.webp" width="660" height="924" alt="Una hoja de la litografía de El Cairo, que muestra una cuadrícula de cuatro por cuatro de palabras encerrada en un borde a la derecha del texto árabe, con líneas diagonales de un segundo texto que se extienden a lo largo del margen" fetchpriority="high"></a>
+          <a class="zoom" href="/assets/img/dayrabi-plate-square-1600.webp"><img src="/assets/img/dayrabi-plate-square.webp" srcset="/assets/img/dayrabi-plate-square-640.webp 424w, /assets/img/dayrabi-plate-square.webp 660w" sizes="(max-width: 760px) 260px, 420px" width="660" height="924" alt="Una hoja de la litografía de El Cairo, que muestra una cuadrícula de cuatro por cuatro de palabras encerrada en un borde a la derecha del texto árabe, con líneas diagonales de un segundo texto que se extienden a lo largo del margen" fetchpriority="high"></a>
           <figcaption>Lámina 11: la página de litografía que contiene el cuadrado de palabras de cuatro por cuatro (el ejemplar de McGill, p. 71).</figcaption>
         </figure>
         <div class="hero-copy">
@@ -15,9 +15,9 @@
           <h1>Lee gratis: la sección sobre el mal de ojo de un manual cairota del siglo XVIII.</h1>
           <p class="lede">El extracto comienza con las portadas, el índice y el prólogo del traductor. A continuación sigue el capítulo veintiuno completo de Mujarrabāt de al-Dayrabī: los textos escritos y llevados como protección contra el mal de ojo y la mirada, las recitaciones, y los relatos que transcribió de libros anteriores, junto con facsímiles de ambas páginas litografiadas.</p>
           <div class="capture capture-hero">
-            <form method="post" id="sample-dayrabi" action="https://mcp.pub.cat/books/subscribe" data-download-label="Ver la muestra de 18 páginas (PDF)">
+            <form method="post" id="sample-dayrabi" action="https://mcp.pub.cat/books/subscribe" data-download-label="Ver la muestra de 18 páginas (PDF)" data-next-offers="next-offers">
               <label class="skip" for="email-sample">Dirección de correo electrónico</label>
-              <input type="email" id="email-sample" name="email" placeholder="tu@ejemplo.com" required autocomplete="email">
+              <input type="email" id="email-sample" name="email" placeholder="tu@ejemplo.com" required autocomplete="email" enterkeyhint="send">
               <button class="btn btn-primary" type="submit">Envíame la muestra</button>
             </form>
             <p class="small dim">El enlace para descargar el archivo aparece aquí en cuanto haces clic en el botón, y también se envía una copia a tu dirección de correo electrónico. Durante la próxima semana recibirás dos mensajes breves sobre este libro, y a partir de entonces no más de unos pocos cada año. Responder con una sola palabra bastará para ponerles fin.</p>
@@ -65,13 +65,22 @@
     <div class="wrap narrow">
       <div class="capture">
         <h2 style="font-size:1.4rem;margin-top:0">Lee el capítulo antes de decidirte.</h2>
-        <form method="post" id="sample-dayrabi-2" action="https://mcp.pub.cat/books/subscribe" data-download-label="Ver la muestra de 18 páginas (PDF)">
+        <form method="post" id="sample-dayrabi-2" action="https://mcp.pub.cat/books/subscribe" data-download-label="Ver la muestra de 18 páginas (PDF)" data-next-offers="next-offers">
           <label class="skip" for="email-sample-2">Dirección de correo electrónico</label>
-          <input type="email" id="email-sample-2" name="email" placeholder="tu@ejemplo.com" required autocomplete="email">
+          <input type="email" id="email-sample-2" name="email" placeholder="tu@ejemplo.com" required autocomplete="email" enterkeyhint="send">
           <button class="btn btn-primary" type="submit">Envíame la muestra</button>
         </form>
       </div>
       <p class="small dim" style="margin-top:1.5rem">¿Ya te has decidido? La <a href="https://whop.com/checkout/plan_6Bau4IHun9v3H?utm_source=books.pub.cat&amp;utm_medium=sample-page&amp;utm_campaign=dayrabi">edición digital cuesta $9.99</a> en formatos PDF y EPUB. También se encuentra en Amazon, donde la <a href="https://www.amazon.com/dp/B0HL72MT4F?maas=maas_adg_52FC57366D955B5C3130CB9E19D91AFE_afap_abs&amp;ref_=aa_maas&amp;tag=maas">versión Kindle tiene un precio de $9.99</a> y el <a href="https://www.amazon.com/dp/B0HL8JCY6V?maas=maas_adg_1E49188A7DCD6BD76CD163708540D788_afap_abs&amp;ref_=aa_maas&amp;tag=maas">libro en rústica de $24.99</a>.</p>
     </div>
   </section>
+    <div class="next-offers" id="next-offers" hidden>
+      <p class="next-head">Hay tres formatos disponibles para el libro completo. Elige el que mejor te venga:</p>
+      <div class="next-grid">
+        <a class="btn btn-ghost" href="https://www.amazon.com/dp/B0HL8JCY6V?maas=maas_adg_1E49188A7DCD6BD76CD163708540D788_afap_abs&amp;ref_=aa_maas&amp;tag=maas">Tapa blanda, $24.99, en Amazon</a>
+        <a class="btn btn-ghost" href="https://www.amazon.com/dp/B0HL72MT4F?maas=maas_adg_52FC57366D955B5C3130CB9E19D91AFE_afap_abs&amp;ref_=aa_maas&amp;tag=maas">Kindle, $9.99, en Amazon</a>
+        <a class="btn btn-ghost" href="https://whop.com/checkout/plan_6Bau4IHun9v3H?utm_source=books.pub.cat&amp;utm_medium=signup-panel&amp;utm_campaign=dayrabi">PDF y EPUB, $9.99, comprados directamente a nosotros</a>
+      </div>
+      <p class="small dim next-foot"><a href="/mujarrabat-al-dayrabi/#buy">La página del libro</a> incluye todas las ediciones y precios.</p>
+    </div>
 </main>

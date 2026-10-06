@@ -290,7 +290,7 @@ def head(b, lang, title, desc, url, ld):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="/assets/css/main.css?v=20261006a">
+<link rel="stylesheet" href="/assets/css/main.css?v=20261007a">
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=1)}
 </script>
@@ -462,7 +462,7 @@ def page(b, lang):
   </section>
 </main>
 <footer class="site-foot"></footer>
-<script src="/assets/js/site.js?v=20261006a" defer></script>
+<script src="/assets/js/site.js?v=20261007a" defer></script>
 </body>
 </html>
 """

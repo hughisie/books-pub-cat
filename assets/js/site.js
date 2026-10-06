@@ -167,7 +167,17 @@
                  signed up sees where the full book is without hunting for it */
               var nextHref = form.getAttribute("data-next-href");
               var nextLabel = form.getAttribute("data-next-label");
-              if (nextHref && nextLabel) {
+              /* 7 Oct 2026: <form data-next-offers="id"> names a hidden block on the page
+                 holding the three ways to buy (paperback, Kindle, direct) at equal weight.
+                 The wording lives in the page, so the es/ca translations carry it. */
+              var offersId = form.getAttribute("data-next-offers");
+              var offersTpl = offersId ? document.getElementById(offersId) : null;
+              if (offersTpl) {
+                var panel = offersTpl.cloneNode(true);
+                panel.removeAttribute("id");
+                panel.hidden = false;
+                note.parentNode.insertBefore(panel, note.nextSibling);
+              } else if (nextHref && nextLabel) {
                 var nx = document.createElement("a");
                 nx.className = "btn btn-ghost btn-next";
                 nx.href = nextHref;
