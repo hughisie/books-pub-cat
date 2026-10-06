@@ -161,6 +161,19 @@
               dl.style.cssText = "display:inline-block;margin-top:.7rem";
               note.appendChild(document.createElement("br"));
               note.appendChild(dl);
+              /* the next step after the sample (6 Oct 2026): a page can name it on the form,
+                 <form data-next-href="..." data-next-label="...">, so a reader who has just
+                 signed up sees where the full book is without hunting for it */
+              var nextHref = form.getAttribute("data-next-href");
+              var nextLabel = form.getAttribute("data-next-label");
+              if (nextHref && nextLabel) {
+                var nx = document.createElement("a");
+                nx.className = "btn btn-ghost btn-next";
+                nx.href = nextHref;
+                nx.textContent = nextLabel;
+                note.appendChild(document.createElement("br"));
+                note.appendChild(nx);
+              }
               dl.focus();
             } else if (isSample) {
               note.textContent = T("js_no_link");
@@ -358,6 +371,49 @@
     stage.addEventListener("touchend", function (ev) { if (ev.touches.length < 2) pinch = null; });
   }
 
+  /* ------------------------------------------------------- sticky CTA
+     Sample pages only (body.capture-page), phones only (the CSS shows it under 760 px).
+     A slim bar at the bottom whose button repeats the form's own button text (so it is
+     right in every language without new strings) and jumps to the first form. It hides
+     whenever a form is on screen, while the consent bar is up, and for good once the
+     reader has signed up. Added 6 Oct 2026. */
+  function stickyCta() {
+    if (!document.body.classList.contains("capture-page")) return;
+    var forms = document.querySelectorAll('form[id^="sample"]');
+    if (!forms.length || !window.IntersectionObserver) return;
+    var first = forms[0];
+    var srcBtn = first.querySelector('button[type="submit"]');
+    if (!srcBtn) return;
+    var bar = document.createElement("div");
+    bar.className = "sticky-cta";
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn-primary";
+    b.textContent = srcBtn.textContent;
+    bar.appendChild(b);
+    document.body.appendChild(bar);
+    var visible = {};
+    function update() {
+      var done = Array.prototype.some.call(forms, function (f) { return f.hidden; });
+      var anyOnScreen = Object.keys(visible).some(function (k) { return visible[k]; });
+      var consentUp = !!document.querySelector(".consent-bar");
+      bar.classList.toggle("show", !done && !anyOnScreen && !consentUp);
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      update();
+    });
+    Array.prototype.forEach.call(forms, function (f) { io.observe(f); });
+    document.addEventListener("click", function () { setTimeout(update, 0); });
+    document.addEventListener("submit", function () { setTimeout(update, 0); }, true);
+    window.addEventListener("scroll", function () { if (bar.classList.contains("show")) update(); }, { passive: true });
+    b.addEventListener("click", function () {
+      first.scrollIntoView({ behavior: "smooth", block: "center" });
+      var input = first.querySelector('input[type="email"]');
+      if (input) setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }, 350);
+    });
+  }
+
   function start() {
     /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
        the id is the source value the server and the email sequences match on */
@@ -365,6 +421,7 @@
     banner();
     optOutLinks();
     lightbox();
+    stickyCta();
   }
 
   if (document.readyState === "loading") {

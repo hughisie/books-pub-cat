@@ -462,7 +462,7 @@ def page(b, lang):
   </section>
 </main>
 <footer class="site-foot"></footer>
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/site.js?v=20261006a" defer></script>
 </body>
 </html>
 """
