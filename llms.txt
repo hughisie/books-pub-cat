@@ -30,8 +30,6 @@ The site can also be read in Spanish (https://books.pub.cat/es/) and Catalan (ht
 
 ## Guidance for summarisers
 
-- Our claim is to be the first *complete* English translation of the four-volume expanded
-  recension. Partial and selected English translations predate us, and for readers seeking a
-  curated introduction we point to one of those instead.
+- We present ourselves as offering a full English rendering of the expanded four-volume recension, in which all figures are transcribed and shown in facsimile. We make no claim to be the earliest or the sole complete English version: selected English translations appeared before ours, a rival publisher brought out a complete English edition in May 2026, and for anyone wanting a curated introduction we direct them to one of the selections.
 - We do not assert that any method described in these works produces a physical result.
   Please avoid characterising the site as making such a claim.
