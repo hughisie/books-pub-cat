@@ -27,6 +27,100 @@
 
   var STORE_KEY = "pubcat-books-consent";
 
+  /* ------------------------------------------------ measurement (6 Oct 2026)
+     Draft on branch tracking-2026-10-06, not live. What it adds:
+       1. The ad a reader came from. Whop's ad tool tags its links with
+          wacid (campaign), wasid (ad group) and waid (ad); with utm_* those are
+          campaign labels, not personal identifiers. They go with the sample
+          sign-up to our server, so each sign-up, and any later Whop sale by the
+          same email, can be tied to the ad that brought it.
+       2. The same labels are carried onto Whop checkout links, so a reader who
+          goes from our page to Whop still carries the ad's tags.
+       3. Buy-intent clicks to Amazon are reported to Whop's pixel as
+          "add_to_cart" plus a per-ASIN custom event, so Whop and Meta can see
+          (and later optimise for) people who head off to buy. Amazon itself
+          has no pixel, so this is the last thing we can see.
+       4. Visitors who arrived from a paid ad get a separate Amazon Attribution
+          tag when ATTRIB_PAID has one for that ASIN, so Meta-driven Amazon
+          sales stop being lumped in with everyone else's "Site" clicks.
+       5. A sign-up made before the visitor answers the consent banner is held
+          and sent if they then click Allow, instead of being lost.
+     Consent rule unchanged: nothing goes to Whop or Meta, and nothing is
+     stored in the browser, unless the advertising pixels are allowed. */
+  var AD_PARAMS = ["wacid", "wasid", "waid", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  var CLICK_ID_PARAMS = ["fbclid"];           /* person-level: only sent once the pixels are allowed */
+  var AD_KEY = "pubcat-books-ad";             /* sessionStorage, written only after consent */
+
+  /* ASIN -> Amazon Attribution "maas" value for readers who came from a paid ad.
+     Empty until Owen creates the ad groups in Amazon Attribution (free), e.g.
+     "Meta via site: Dayrabi Kindle". Until then the "Site ..." tags stay as they are. */
+  var ATTRIB_PAID = {};
+
+  /* Whop's pixel accepts the reader's email in plain text to match the event to
+     a Meta user (better match, better optimisation). Off until Owen decides and
+     the privacy page says so. */
+  var SEND_EMAIL_TO_WHOP = false;
+
+  var pixelsOn = false;        /* true once loadPixels() has run */
+  var consentDenied = false;   /* true once the visitor said no */
+  var heldEvents = [];         /* events waiting on the consent banner */
+
+  function paramsFrom(search, names) {
+    var out = {};
+    try {
+      var q = new URLSearchParams(search || "");
+      names.forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 120); });
+    } catch (e) {}
+    return out;
+  }
+  var LANDING_AD = paramsFrom(window.location.search, AD_PARAMS);
+  var LANDING_CLICK = paramsFrom(window.location.search, CLICK_ID_PARAMS);
+  function hasKeys(o) { for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) return true; return false; }
+
+  function storedAd() {
+    try { return JSON.parse(window.sessionStorage.getItem(AD_KEY) || "null") || {}; }
+    catch (e) { return {}; }
+  }
+  /* The ad labels for this visit: from this page's address, else from earlier in the visit. */
+  function currentAd() {
+    if (hasKeys(LANDING_AD)) return LANDING_AD;
+    var s = storedAd();
+    return s.ad || {};
+  }
+  function currentClick() {
+    if (!pixelsOn) return {};
+    if (hasKeys(LANDING_CLICK)) return LANDING_CLICK;
+    var s = storedAd();
+    return s.click || {};
+  }
+  function rememberAd() {
+    if (!hasKeys(LANDING_AD) && !hasKeys(LANDING_CLICK)) return;
+    try { window.sessionStorage.setItem(AD_KEY, JSON.stringify({ ad: LANDING_AD, click: LANDING_CLICK, page: window.location.pathname })); }
+    catch (e) {}
+  }
+  function fromPaidAd() {
+    var a = currentAd();
+    return !!(a.waid || a.wasid || a.wacid || /^(fb|ig|facebook|instagram|meta|whop)/i.test(a.utm_source || ""));
+  }
+
+  function eventId(prefix) {
+    return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+  }
+
+  /* One door to Whop's pixel: sends now, holds while the banner is unanswered,
+     drops if the visitor said no. */
+  function track(name, props) {
+    if (window.whop && pixelsOn) {
+      try { props ? window.whop.track(name, props) : window.whop.track(name); } catch (e) {}
+      return;
+    }
+    if (!consentDenied && heldEvents.length < 20) heldEvents.push([name, props]);
+  }
+  function flushHeld() {
+    var q = heldEvents; heldEvents = [];
+    q.forEach(function (ev) { track(ev[0], ev[1]); });
+  }
+
   /* Every visible string, per language (2 Oct 2026). The English is the copy that was
      already live; Spanish and Catalan are DeepSeek's translations, written in here by
      tools/i18n/build.py js. Do not edit between the markers by hand. */
@@ -127,6 +221,7 @@
       if (!input || !input.value) return;
 
       var original = button ? button.textContent : "";
+      var signupId = eventId("su");
       if (button) { button.disabled = true; button.textContent = T("js_sending"); }
       note.hidden = false;
       note.textContent = "";
@@ -137,7 +232,13 @@
         body: JSON.stringify({
           email: input.value.trim(),
           website: pot.value,
-          source: form.id || "site"
+          source: form.id || "site",
+          /* which ad, page and click this sign-up came from (draft, 6 Oct 2026);
+             the server ignores fields it does not know until its own patch is in */
+          event_id: signupId,
+          page: window.location.pathname,
+          ad: currentAd(),
+          click: currentClick()
         })
       })
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
@@ -145,7 +246,13 @@
           if (res.ok) {
             form.hidden = true;
             var isSample = /^sample/.test(form.id || "");
-            if (window.whop && isSample) { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
+            if (isSample) {
+              /* same event_id on both, so a later server-side copy can be de-duplicated */
+              var who = SEND_EMAIL_TO_WHOP ? { email: input.value.trim() } : {};
+              who.event_id = signupId;
+              track("complete_registration", who);
+              track("lead", { event_id: signupId });
+            }
             if (isSample && res.j && res.j.sample_url) {
               /* the server hands back the hosted PDF; show it right here rather
                  than promising an email that nothing sends yet */
@@ -161,6 +268,7 @@
               dl.style.cssText = "display:inline-block;margin-top:.7rem";
               note.appendChild(document.createElement("br"));
               note.appendChild(dl);
+              dl.addEventListener("click", function () { track("sample_opened", { event_id: signupId + "-open" }); });
               dl.focus();
             } else if (isSample) {
               note.textContent = T("js_no_link");
@@ -190,8 +298,11 @@
   }
 
   function loadPixels() {
+    pixelsOn = true;
     loadWhopPixel();
     loadMetaPixel();
+    rememberAd();
+    flushHeld();
   }
 
   function loadMetaPixel() {
@@ -220,7 +331,7 @@
     if (!META_PIXEL_ID && !WHOP_BIZ_ID) return;   /* nothing to consent to yet */
     var stored = readConsent();
     if (stored) {
-      if (stored === "granted") loadPixels();
+      if (stored === "granted") loadPixels(); else { consentDenied = true; heldEvents = []; }
       return;
     }
     var decided = false;
@@ -247,6 +358,7 @@
       a.addEventListener("click", function (ev) {
         ev.preventDefault();
         writeConsent("denied");
+        consentDenied = true; heldEvents = [];
         var note = document.createElement("p");
         note.className = "small";
         note.setAttribute("role", "status");
@@ -273,6 +385,7 @@
       var choice = ev.target && ev.target.getAttribute("data-consent");
       if (!choice) return;
       writeConsent(choice);
+      if (choice !== "granted") { consentDenied = true; heldEvents = []; }
       bar.parentNode.removeChild(bar);
       if (choice === "granted") loadPixels();
     });
@@ -358,6 +471,53 @@
     stage.addEventListener("touchend", function (ev) { if (ev.touches.length < 2) pinch = null; });
   }
 
+  /* ------------------------------------------- outbound buy clicks (6 Oct 2026)
+     Amazon: report the buy-intent click to Whop's pixel, and swap in the paid-ad
+     Attribution tag when this visit came from an ad and one exists for the ASIN.
+     Whop checkout: carry the ad's wacid/wasid/waid onto the link (Whop records the
+     checkout and the purchase itself, so no event is fired for it). */
+  function outboundClicks() {
+    document.addEventListener("click", function (ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+      if (!a) return;
+      var url;
+      try { url = new URL(a.href); } catch (e) { return; }
+      var host = url.hostname.replace(/^www\./, "");
+      var ad = currentAd();
+
+      if (host === "whop.com" && /^\/checkout\//.test(url.pathname)) {
+        ["wacid", "wasid", "waid"].forEach(function (k) {
+          if (ad[k] && !url.searchParams.get(k)) url.searchParams.set(k, ad[k]);
+        });
+        a.href = url.toString();
+        return;
+      }
+
+      if (!/^amazon\.(com|es|co\.uk|ca|de|fr|it)$/.test(host)) return;
+      var m = url.pathname.match(/\/dp\/([A-Z0-9]{10})/);
+      var asin = m ? m[1] : "unknown";
+      if (fromPaidAd() && ATTRIB_PAID[asin]) {
+        url.searchParams.set("maas", ATTRIB_PAID[asin]);
+        url.searchParams.set("ref_", "aa_maas");
+        url.searchParams.set("tag", "maas");
+        a.href = url.toString();
+      }
+      var id = eventId("az");
+      track("add_to_cart", { event_id: id });
+      track("amazon_click_" + host.split(".").slice(1).join(".") + "_" + asin, { event_id: id + "-x" });
+
+      /* give the pixel a moment to send before the page is left; new tabs and
+         modified clicks need no wait */
+      var plain = !ev.defaultPrevented && ev.button === 0 && !ev.metaKey && !ev.ctrlKey &&
+        !ev.shiftKey && !ev.altKey && (a.target || "_self") === "_self";
+      if (plain && window.whop && pixelsOn) {
+        ev.preventDefault();
+        var go = a.href;
+        setTimeout(function () { window.location.href = go; }, 250);
+      }
+    }, true);
+  }
+
   function start() {
     /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
        the id is the source value the server and the email sequences match on */
@@ -365,6 +525,7 @@
     banner();
     optOutLinks();
     lightbox();
+    outboundClicks();
   }
 
   if (document.readyState === "loading") {
