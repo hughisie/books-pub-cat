@@ -35,7 +35,7 @@
     "en": {
       "js_sending": "Sending…",
       "js_ready": "Your sample is ready.",
-      "js_open_sample": "Open the 30-page sample (PDF)",
+      "js_open_sample": "Open the 35-page sample (PDF)",
       "js_no_link": "Thank you. The download link did not come back; email owen@pub.cat and we will send it by hand.",
       "js_listed": "Thank you. You are on the list.",
       "js_failed": "That did not go through. Please email us instead and we will add you by hand.",
@@ -52,7 +52,7 @@
     "es": {
       "js_sending": "Enviando…",
       "js_ready": "Tu muestra está lista.",
-      "js_open_sample": "Abrir la muestra de 30 páginas (PDF)",
+      "js_open_sample": "Abrir la muestra de 35 páginas (PDF)",
       "js_no_link": "Gracias. El enlace de descarga no ha llegado; escribe a owen@pub.cat y te lo enviaremos a mano.",
       "js_listed": "Gracias. Ya estás en la lista.",
       "js_failed": "No se ha podido completar. Escríbenos por correo y te añadiremos a mano.",
@@ -69,7 +69,7 @@
     "ca": {
       "js_sending": "S'està enviant…",
       "js_ready": "La teva mostra ja està a punt.",
-      "js_open_sample": "Obre la mostra de 30 pàgines (PDF)",
+      "js_open_sample": "Obre la mostra de 35 pàgines (PDF)",
       "js_no_link": "Gràcies. L'enllaç de descàrrega no ha arribat; escriu a owen@pub.cat i te'l farem arribar manualment.",
       "js_listed": "Gràcies. Ja ets a la llista.",
       "js_failed": "No s'ha pogut completar. Escriu-nos directament i t'afegirem manualment.",
