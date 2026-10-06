@@ -287,7 +287,10 @@ def head(b, lang, title, desc, url, ld):
 <meta property="og:url" content="{url}">{'' if lang == 'en' else chr(10) + '<meta property="og:locale" content="%s">' % build.OG_LOCALE[lang]}
 <meta property="og:image" content="{SITE}/assets/img/og-{b['img']}.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="/assets/css/main.css?v=20261006a">
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=1)}
 </script>

@@ -2,7 +2,8 @@
    Plain CSS, no build step, no framework.
    Palette: deep ink ground, parchment text, gold leaf accent. */
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+/* EB Garamond is linked from each page's <head> (with preconnect), not @import-ed here:
+   an @import inside a stylesheet adds a second render-blocking round trip. 6 Oct 2026. */
 
 :root {
   --ink:        #0d0c0b;
