@@ -144,6 +144,7 @@
         .then(function (res) {
           if (res.ok) {
             form.hidden = true;
+            try { document.dispatchEvent(new CustomEvent("pubcat:signedup")); } catch (e) {}
             var isSample = /^sample/.test(form.id || "");
             if (window.whop && isSample) { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
             if (isSample && res.j && res.j.sample_url) {
@@ -405,7 +406,7 @@
     });
     Array.prototype.forEach.call(forms, function (f) { io.observe(f); });
     document.addEventListener("click", function () { setTimeout(update, 0); });
-    document.addEventListener("submit", function () { setTimeout(update, 0); }, true);
+    document.addEventListener("pubcat:signedup", function () { bar.classList.remove("show"); setTimeout(update, 0); });
     window.addEventListener("scroll", function () { if (bar.classList.contains("show")) update(); }, { passive: true });
     b.addEventListener("click", function () {
       first.scrollIntoView({ behavior: "smooth", block: "center" });

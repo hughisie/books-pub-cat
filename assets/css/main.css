@@ -364,3 +364,7 @@ a.zoom::after{content:"";position:absolute;right:.55rem;bottom:.55rem;width:1.7r
 .sticky-cta .btn{width:100%;text-align:center;padding:.8rem 1rem}
 @media (max-width:760px){.sticky-cta.show{display:block}}
 @media print{.sticky-cta{display:none!important}}
+/* The forms are hidden with the hidden attribute after a sign-up, but ".capture form{display:flex}"
+   outranked the browser's own [hidden] rule, so the used form stayed on screen saying "Sending…"
+   above the download button. Live since September; fixed 6 Oct 2026. */
+[hidden]{display:none!important}
