@@ -335,3 +335,32 @@ a.zoom::after{content:"";position:absolute;right:.55rem;bottom:.55rem;width:1.7r
 .lang-note-site{color:var(--parchment-dim)}
 @media (max-width:40rem){.site-head .wrap{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}.site-nav{order:3;width:100%}.book-card .book-cover{width:7rem}}
 .site-head.slim .wrap{justify-content:space-between}
+
+/* ---- 6 October 2026: ad landing pages (the /read/ sample pages) ----
+   Meta traffic is almost all phones. On a 375 px screen the facsimile plate used to fill
+   the whole first screen and the email form sat about 1,100 px down. Now the offer,
+   headline and form come first and the plate follows. */
+@media (max-width:760px){
+  .hero-sample{padding:1.1rem 0 .5rem}
+  .hero-sample .hero-grid{gap:1.5rem}
+  .hero-sample .hero-copy{order:-1}
+  .hero-sample .plate-figure{max-width:260px}
+  .hero-sample .eyebrow{margin-bottom:.35rem}
+  .hero-sample .lede{font-size:1.02rem;line-height:1.5;margin-bottom:.4rem}
+  .capture-page h1{font-size:1.6rem;margin-bottom:.5rem}
+  .capture-hero{padding:1rem;margin-top:.8rem}
+  .capture-hero form{margin-top:0}
+  .capture-hero .btn{width:100%}
+  .capture-hero .small{font-size:.85rem;line-height:1.45;margin:.6rem 0 0}
+}
+.capture .btn-next{display:inline-block;margin-top:.5rem}
+/* one-line reassurance right under the button */
+.capture .trust{font-size:.88rem;color:var(--parchment-dim);margin:.55rem 0 0;line-height:1.4}
+
+/* Sticky "get the sample" bar on phones, shown only while neither form is on screen. */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:55;display:none;
+  padding:.6rem 1rem calc(.6rem + env(safe-area-inset-bottom));
+  background:rgba(13,12,11,.96);border-top:1px solid var(--ink-line);box-shadow:0 -6px 20px rgba(0,0,0,.35)}
+.sticky-cta .btn{width:100%;text-align:center;padding:.8rem 1rem}
+@media (max-width:760px){.sticky-cta.show{display:block}}
+@media print{.sticky-cta{display:none!important}}
