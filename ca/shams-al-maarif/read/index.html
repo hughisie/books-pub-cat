@@ -19,7 +19,7 @@
 <meta property="og:locale" content="ca_ES">
 <meta property="og:image" content="https://books.pub.cat/assets/img/og-sample.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" as="image" href="/assets/img/plate-talisman.webp">
+<link rel="preload" as="image" href="/assets/img/plate-talisman.webp" media="(min-width: 761px)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
@@ -42,7 +42,7 @@
     <div class="wrap">
       <div class="hero-grid">
         <figure class="plate-figure">
-          <a class="zoom" href="/assets/img/plate-talisman-1600.webp"><img src="/assets/img/plate-talisman.webp" width="660" height="1004" alt="Una pàgina de l'edició del Caire de Shams al-Maʿārif, amb una gran figura talismànica circular dins d'un marc rectangular entre el text àrab" fetchpriority="high"></a>
+          <a class="zoom" href="/assets/img/plate-talisman-1600.webp"><img src="/assets/img/plate-talisman.webp" srcset="/assets/img/plate-talisman-640.webp 424w, /assets/img/plate-talisman.webp 660w" sizes="(max-width: 760px) 260px, 420px" width="660" height="1004" alt="Una pàgina de l'edició del Caire de Shams al-Maʿārif, amb una gran figura talismànica circular dins d'un marc rectangular entre el text àrab" fetchpriority="high"></a>
           <figcaption>Una imatge definitòria de l'edició del Caire, que es troba a la pàgina 20 de l'escanejat. L'edició conté 483 pàgines com aquesta en total.</figcaption>
         </figure>
         <div class="hero-copy">
@@ -53,7 +53,7 @@
           <div class="capture capture-hero">
             <form method="post" id="sample-form-ca" action="https://mcp.pub.cat/books/subscribe">
               <label class="skip" for="email-sample">Adreça electrònica</label>
-              <input type="email" id="email-sample" name="email" placeholder="you@example.com" required autocomplete="email">
+              <input type="email" id="email-sample" name="email" placeholder="you@example.com" required autocomplete="email" enterkeyhint="send">
               <button class="btn btn-primary" type="submit">Envia'm la mostra</button>
             </form>
             <p class="small dim">L'enllaç de descàrrega es fa visible aquí tan bon punt feu clic al botó. La vostra adreça només s'utilitza per a uns quants missatges l'any sobre novetats, i un sol clic els cancel·larà.</p>
@@ -106,7 +106,7 @@
         <h2 style="font-size:1.4rem;margin-top:0">La mostra és el que més importa. Proveu-la i després decidiu.</h2>
         <form method="post" id="sample-form-2-ca" action="https://mcp.pub.cat/books/subscribe">
           <label class="skip" for="email-sample-2">Adreça electrònica</label>
-          <input type="email" id="email-sample-2" name="email" placeholder="you@example.com" required autocomplete="email">
+          <input type="email" id="email-sample-2" name="email" placeholder="you@example.com" required autocomplete="email" enterkeyhint="send">
           <button class="btn btn-primary" type="submit">Envieu-me la mostra</button>
         </form>
       </div>
