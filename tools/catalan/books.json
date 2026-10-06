@@ -1,0 +1,175 @@
+{
+  "_about": "The Catalan classics on books.pub.cat, and the own-site paperback shop for every live KDP paperback. tools/catalan/gen.py builds the pages from this file. Prices are the Amazon shelf prices (Spain's fixed book price law: never more than 5 percent below). paperback_shop false = no own-site paperback button anywhere on the site, in the page or in the structured data; Owen says go, set it true, run gen.py, check, push. The Whop plan ids live in pubcat-books fulfilment/whop_paperback_products.json (private), not here.",
+  "paperback_shop": false,
+  "delivery_days": [
+    7,
+    21
+  ],
+  "handling_days": [
+    1,
+    5
+  ],
+  "books": [
+    {
+      "slug": "dracula",
+      "work": "dracula-ca",
+      "title": "Dràcula",
+      "author": "Bram Stoker",
+      "first_published": "1897",
+      "translator": "Marçal Fontanet",
+      "img": "dracula-ca",
+      "cover_w": 400,
+      "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
+      "description_md": "titles/dracula-ca/public/description.md",
+      "ebook": {
+        "plan": "plan_vnM3E2BO9EqyN",
+        "price": "3.80"
+      },
+      "kindle": {
+        "asin": "B0HLR6XR81",
+        "price": "3.99"
+      },
+      "paperback": {
+        "asin": "B0HLSG1K3K",
+        "isbn": "9798178434000",
+        "price": "13.99",
+        "currency": "EUR",
+        "pages": 335,
+        "kdp_marketplace_home": "es"
+      }
+    },
+    {
+      "slug": "el-monjo",
+      "work": "the-monk-ca",
+      "title": "El monjo",
+      "author": "Matthew G. Lewis",
+      "first_published": "1796",
+      "translator": "Marçal Fontanet",
+      "img": "the-monk-ca",
+      "cover_w": 400,
+      "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
+      "description_md": "titles/the-monk-ca/public/description.md",
+      "ebook": {
+        "plan": "plan_BNLVi8HoBSLax",
+        "price": "4.75"
+      },
+      "kindle": {
+        "asin": "B0HLY1R18Q",
+        "price": "4.99"
+      },
+      "paperback": {
+        "asin": "B0HLXY8776",
+        "isbn": "9798178944882",
+        "price": "12.99",
+        "currency": "EUR",
+        "pages": 299,
+        "kdp_marketplace_home": "es"
+      }
+    },
+    {
+      "slug": "sleepy-hollow",
+      "work": "sleepy-hollow-ca",
+      "title": "La llegenda de Sleepy Hollow",
+      "author": "Washington Irving",
+      "first_published": "1820",
+      "translator": "Marçal Fontanet",
+      "img": "sleepy-hollow-ca",
+      "cover_w": 400,
+      "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
+      "description_md": "titles/sleepy-hollow-ca/public/description.md",
+      "ebook": {
+        "plan": "plan_5aaejliSBLla0",
+        "price": "2.56"
+      },
+      "kindle": {
+        "asin": "B0HLXLNXMV",
+        "price": "2.69"
+      },
+      "paperback_in": "sleepy-hollow-i-la-casa-defugida"
+    },
+    {
+      "slug": "la-casa-defugida",
+      "work": "shunned-house-ca",
+      "title": "La casa defugida",
+      "author": "H. P. Lovecraft",
+      "first_published": "1937",
+      "translator": "Marçal Fontanet",
+      "img": "shunned-house-ca",
+      "cover_w": 400,
+      "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
+      "description_md": "titles/shunned-house-ca/public/description.md",
+      "ebook": {
+        "plan": "plan_hucG9iD9Mi7JL",
+        "price": "3.32"
+      },
+      "paperback_in": "sleepy-hollow-i-la-casa-defugida"
+    },
+    {
+      "slug": "sleepy-hollow-i-la-casa-defugida",
+      "work": "sleepy-shunned-ca",
+      "title": "La llegenda de Sleepy Hollow i La casa defugida",
+      "subtitle_ca": "Dos relats de terror clàssic",
+      "author": "Washington Irving, H. P. Lovecraft",
+      "translator": "Marçal Fontanet",
+      "img": "sleepy-shunned-ca",
+      "cover_w": 427,
+      "lede_ca": "Dos relats de terror clàssic.",
+      "combines": [
+        "sleepy-hollow",
+        "la-casa-defugida"
+      ],
+      "paperback": {
+        "asin": "B0HLY7T31B",
+        "isbn": "9798160005386",
+        "price": "10.49",
+        "currency": "EUR",
+        "pages": 64,
+        "kdp_marketplace_home": "es"
+      }
+    }
+  ],
+  "english": [
+    {
+      "slug": "mujarrabat-al-dayrabi",
+      "key": "dayrabi",
+      "title": "Mujarrabāt al-Dayrabī",
+      "paperback": {
+        "asin": "B0HL8JCY6V",
+        "isbn": "9798177421872",
+        "price": "24.99",
+        "currency": "USD",
+        "pages": 346,
+        "kdp_marketplace_home": "com"
+      },
+      "show_shop": true
+    },
+    {
+      "slug": "shams-al-maarif",
+      "key": "shams-v1",
+      "title": "Shams al-Maʿārif al-Kubrā, Volume One",
+      "paperback": {
+        "asin": "B0HHZL6SVS",
+        "isbn": "9798172091162",
+        "price": "34.99",
+        "currency": "USD",
+        "pages": 688,
+        "kdp_marketplace_home": "com"
+      },
+      "show_shop": false
+    },
+    {
+      "slug": "shams-al-maarif",
+      "key": "shams-v2",
+      "title": "Shams al-Maʿārif al-Kubrā, Volume Two",
+      "paperback": {
+        "asin": "B0HJ3V5GVB",
+        "isbn": "9798172093081",
+        "price": "34.99",
+        "currency": "USD",
+        "pages": 755,
+        "kdp_marketplace_home": "com"
+      },
+      "show_shop": false
+    }
+  ]
+}

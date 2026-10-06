@@ -45,6 +45,20 @@ PAGES = {
     "/privacy/": (None, False),
     "/terms/": (None, False),
 }
+
+
+def _gen_pages():
+    """The Catalan book pages, written by tools/catalan/gen.py in all three languages.
+    They join the switcher, hreflang and sitemap, but chrome/extract/assemble leave them alone."""
+    import json
+    f = os.path.join(ROOT, "tools", "catalan", "books.json")
+    if not os.path.exists(f):
+        return {}
+    return {"/%s/" % b["slug"]: ("books", False) for b in json.load(open(f, encoding="utf-8"))["books"]}
+
+
+GEN = _gen_pages()
+ALL = {**PAGES, **GEN}
 # English only (noindex): they get the chrome, and the switcher points at the home pages
 EN_ONLY = {
     "/shams-al-maarif/thank-you/": "shams",
@@ -82,7 +96,7 @@ def pre(lang):
 def switcher(t, lang, path):
     links = []
     for l in ("en", "es", "ca"):
-        href = (pre(l) + path) if path in PAGES else (pre(l) + "/")
+        href = (pre(l) + path) if path in ALL else (pre(l) + "/")
         cur = ' aria-current="true"' if l == lang else ""
         links.append(f'<a href="{href}" hreflang="{l}" lang="{l}"{cur}>{l.upper()}</a>')
     return f'    <nav class="lang-switch" aria-label="{t["lang_label"]}">\n      ' + "\n      ".join(links) + "\n    </nav>"
@@ -155,7 +169,7 @@ def set_chrome(s, t, lang, path, current, slim):
     s = re.sub(r"<header class=\"site-head[^\"]*\">.*?</header>", lambda m: header(t, lang, path, current, slim), s, count=1, flags=re.S)
     s = re.sub(r"<footer class=\"site-foot[^\"]*\">.*?</footer>", lambda m: footer(t, lang, slim), s, count=1, flags=re.S)
     s = re.sub(r"\n<!-- hreflang -->.*?<!-- /hreflang -->", "", s, flags=re.S)
-    if path in PAGES:
+    if path in ALL:
         s = re.sub(r'(<link rel="canonical"[^>]*>)', lambda m: m.group(1) + "\n" + hreflang(path), s, count=1)
     s = re.sub(r'main\.css(\?v=[\w]+)?"', 'main.css?v=20261002a"', s)
     s = re.sub(r'site\.js(\?v=[\w]+)?"', 'site.js?v=20261002a"', s)
@@ -240,16 +254,17 @@ def cmd_sitemap():
     pr = {"/": "0.9", "/books/": "1.0", "/shams-al-maarif/": "1.0", "/mujarrabat-al-dayrabi/": "1.0",
           "/shams-al-maarif/read/": "0.8", "/mujarrabat-al-dayrabi/read/": "0.8", "/contact/": "0.3",
           "/refunds/": "0.3", "/privacy/": "0.2", "/terms/": "0.2", "/faq/": "0.5", "/about/": "0.5"}
+    pr.update({p: "0.9" for p in GEN})
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
-    for path in PAGES:
+    for path in ALL:
         alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{l}" href="{SITE}{pre(l)}{path}"/>' for l in ("en", "es", "ca"))
         alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{path}"/>'
         for l in ("en", "es", "ca"):
             out.append(f"  <url><loc>{SITE}{pre(l)}{path}</loc><priority>{pr.get(path, '0.7')}</priority>{alts}\n  </url>")
     out.append("</urlset>")
     wr(os.path.join(ROOT, "sitemap.xml"), "\n".join(out) + "\n")
-    print("sitemap: %d urls" % (len(PAGES) * 3))
+    print("sitemap: %d urls" % (len(ALL) * 3))
 
 
 def cmd_js():

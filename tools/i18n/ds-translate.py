@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Translate an English HTML fragment into Spanish or Catalan with DeepSeek.
+"""Translate an English HTML fragment into Spanish or Catalan with DeepSeek
+(or, with --src ca, a Catalan fragment into English or Spanish).
 
 Runs on london (the key lives in /opt/pubcat/secrets/.env):
 
@@ -31,6 +32,7 @@ MODEL = "deepseek-chat"
 CHUNK = 7000
 
 LANGS = {
+    "en": "British English, in a neutral, clear register suitable for a small literary publisher",
     "es": "Spanish as written in Spain, in a neutral, clear register suitable for a "
           "small literary publisher (address the reader as 'tú' where the English "
           "speaks to the reader directly)",
@@ -63,17 +65,41 @@ ABSOLUTE RULES, breaking any of these fails the job:
 - Do not add, drop or summarise sentences, links or list items.
 - Return ONLY the translated HTML. No preamble, no explanation, no code fences."""
 
+# Catalan-source pages (the Catalan classics): the Catalan wording is the original, already
+# paraphrased by Gemini under the publishing rule; DeepSeek translates it into English or Spanish.
+SYSTEM_CA = """You are a professional translator for Pub.Cat Books, a small publisher in Barcelona.
+Translate the HTML you are given from Catalan into {lang}.
+
+ABSOLUTE RULES, breaking any of these fails the job:
+- Translate the visible text, and the values of the alt, aria-label, title, placeholder,
+  data-caption and data-download-label attributes. Translate nothing else.
+- Keep every tag, every attribute and the order of elements exactly as given. Never
+  change an href, src, id, class, style, width, height or any URL or email address.
+- These books are Catalan translations of classic novels and stories, published in Catalan.
+  Keep the Catalan titles of these editions exactly as written (for example Dràcula, El monjo,
+  La llegenda de Sleepy Hollow, La casa defugida); you may add nothing to them. Keep every
+  personal name and place name as written, and the names Pub.Cat, Pub.Cat Books, Marçal
+  Fontanet, Kindle, Amazon, Whop, EPUB, PDF.
+- Keep every number. Prices stay exactly as written, with the € sign where it appears.
+- Where the text explains a Catalan form of address (vostè, vós), keep the Catalan word in italics
+  or as written and explain it as the source does.
+- NEVER use an em dash. Use a comma, a colon, brackets or a full stop instead.
+- Do not add, drop or summarise sentences, links or list items.
+- Return ONLY the translated HTML. No preamble, no explanation, no code fences."""
+
+SOURCE = {"en": SYSTEM, "ca": SYSTEM_CA}
+
 AR = "āīūḥṣṭḍẓʿʾĀĪŪḤṢṬḌẒ"
 AR_WORD = re.compile(r"[\w%sʿʾ'-]*[%s][\w%sʿʾ-]*" % (AR, AR, AR))
 
 
-def call(text, lang, temperature):
+def call(text, lang, temperature, src="en"):
     key = os.environ.get("DEEPSEEK_API_KEY")
     if not key:
         sys.exit("DEEPSEEK_API_KEY not set. Source /opt/pubcat/secrets/.env first.")
     body = {
         "model": MODEL,
-        "messages": [{"role": "system", "content": SYSTEM.format(lang=LANGS[lang])},
+        "messages": [{"role": "system", "content": SOURCE[src].format(lang=LANGS[lang])},
                      {"role": "user", "content": text}],
         "temperature": temperature,
         "max_tokens": 8000,
@@ -161,7 +187,7 @@ def chunks(s):
     return out
 
 
-def translate(text, lang, retries):
+def translate(text, lang, retries, src="en"):
     done = []
     for i, c in enumerate(chunks(text)):
         if not c.strip():
@@ -172,7 +198,7 @@ def translate(text, lang, retries):
         last = None
         for attempt in range(retries + 1):
             try:
-                out = call(c.strip(), lang, 0.3 + 0.15 * attempt)
+                out = call(c.strip(), lang, 0.3 + 0.15 * attempt, src)
                 out = re.sub(r"^```[a-z]*\n|\n```$", "", out).strip()
                 fails = guard(c, out)
             except Exception as e:  # network or truncation: retry like a guard failure
@@ -196,9 +222,13 @@ def main():
     ap.add_argument("--in", dest="inp", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--retries", type=int, default=3)
+    ap.add_argument("--src", default="en", choices=sorted(SOURCE),
+                    help="source language: en (the site pages) or ca (the Catalan books)")
     a = ap.parse_args()
     src = open(a.inp, encoding="utf-8").read()
-    out = translate(src, a.lang, a.retries)
+    if a.src == a.lang:
+        sys.exit("source and target are the same language")
+    out = translate(src, a.lang, a.retries, a.src)
     open(a.out, "w", encoding="utf-8").write(out)
     print("wrote %s (%d chars)" % (a.out, len(out)), file=sys.stderr)
 
