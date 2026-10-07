@@ -40,6 +40,12 @@
 }
 </script>
 <link rel="preload" as="image" href="/assets/img/dayrabi-cover-640.webp">
+<style>
+/* 7 Oct 2026: story-led hero. The story, both buttons and the proof line fit a 375 x 812 phone screen. */
+.story-h1 + .lede{font-size:1.22rem;line-height:1.6}
+.hero .proof{color:var(--parchment);opacity:.85;border-left:2px solid var(--gold-dim);padding-left:.8rem;margin:0 0 .4rem}
+@media (max-width:40rem){.hero:has(.story-h1){padding:1.4rem 0 2.5rem}.hero .eyebrow{margin-bottom:.5rem}.story-h1{font-size:1.75rem;text-wrap:balance;margin-bottom:.6rem}.story-h1 + .lede{font-size:1.04rem;line-height:1.5;margin-bottom:.8rem}.hero .proof{font-size:.86rem;line-height:1.45}.story-h1 ~ .lang-note{font-size:.86rem;line-height:1.45;margin-bottom:.4rem}.hero:has(.story-h1) .btn-row{margin:1rem 0 .7rem;gap:.6rem}.hero:has(.story-h1) .btn{padding-top:.75rem;padding-bottom:.75rem}}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Vés al contingut</a>
@@ -70,11 +76,12 @@
           <a class="zoom" href="/assets/img/dayrabi-plate-square-1600.webp" data-caption="Planxa 11: la pàgina de litografia que conté el quadrat de paraules de quatre per quatre (l'exemplar de McGill, p. 71)."><img class="plate" src="/assets/img/dayrabi-plate-square-640.webp" width="424" height="594" alt="Un full de la litografia del Caire, que mostra una graella de quatre per quatre de paraules dins d'una orla a la dreta del text àrab" loading="lazy"></a>
         </div>
         <div class="hero-copy">
-<p class="eyebrow">Aḥmad ibn ʿUmar al-Dayrabī, mort el 1151 AH</p>
-<h1>Mujarrabāt al-Dayrabī</h1>
-<p class="lede">Un manual de pràctiques provades i comprovades del Caire del segle XVIII, ara publicat íntegrament en anglès per primera vegada segons el que sabem, amb una traducció completa de la segona obra impresa al seu marge.</p>
+<p class="eyebrow">Mujarrabāt al-Dayrabī, l'edició anglesa completa</p>
+<h1 class="story-h1">Es van desembeinar les espases a al-Azhar, i ell va deixar el seu llibre de banda.</h1>
+<p class="lede">El Caire, 1123 AH. Aḥmad al-Dayrabī, jurista de l'escola Shāfiʿī, havia anat recollint pràctiques provades a partir de notes que els estudiosos havien deixat als marges dels seus llibres. Després esclatà la lluita a la mesquita i la seva vista començà a fallar. Tornà a l'obra i la va dur fins al final, i el Caire no l'ha deixada mai d'imprimir. Pel que podem establir, aquesta és la primera vegada que apareix en anglès.</p>
           <p class="lang-note">Tingues en compte que aquest títol es publica en anglès. És una traducció a l'anglès de l'original àrab, i no n'hem publicat cap altra edició en cap altre idioma.</p>
-<div class="btn-row"><a class="btn btn-primary" href="#buy">Tria una edició</a> <a class="btn btn-ghost" href="/ca/mujarrabat-al-dayrabi/read/">Llegeix la mostra gratuïta</a></div>
+<div class="btn-row"><a class="btn btn-primary" href="#buy">Aconsegueix el llibre complet</a> <a class="btn btn-ghost" href="/ca/mujarrabat-al-dayrabi/read/">Llegeix gratis el capítol del mal d'ull</a></div>
+<p class="small proof">36 capítols i una conclusió, més els Mujarrabāt d'al-Sanūsī extrets dels marges. Cotejats amb un manuscrit del segle XVIII conservat a Exeter, amb cada numeral llegit dues vegades i cada figura reproduïda en facsímil.</p>
 <p class="small dim">Aquesta és una traducció d'un document històric. Res del que conté no s'ha d'interpretar com una afirmació que cap de les pràctiques descrites produeixi un efecte físic.</p>
         </div>
       </div>
@@ -96,10 +103,10 @@
 
   <section>
     <div class="wrap narrow">
-      <h2>Què és aquest llibre</h2>
-      <p>Fa gairebé tres segles, un jurista Shāfiʿī d'al-Azhar, al Caire, va compilar un manual pràctic de mètodes provats i de confiança. Aḥmad ibn ʿUmar al-Dayrabī va morir el 1151 AH (1738 o 1739 CE), i els seus Mujarrabāt, el títol complet dels quals és Fatḥ al-Malik al-Majīd (L'obertura del Rei Gloriós), s'han publicat i reeditat al Caire des d'aleshores fins ara. Pel que es pot establir, no s'havien traduït a l'anglès anteriorment.</p>
-      <p>El que segueix és la traducció completa. Al llarg de trenta-sis capítols i una conclusió, al-Dayrabī aplega les propietats que atribueix als versos alcorànics i als Noms Divins, juntament amb oracions, amulets, talismans, quadrats màgics i cures: la Fātiḥa i el Vers del Tron, la protecció en els viatges, el mal d'ull, la febre, el part i, al final, curiositats com aguantar el foc i treure taques de la roba. Ell mateix explica que la feina en el llibre es va interrompre el 1123 AH, quan va esclatar una baralla amb espases dins de la mesquita d'al-Azhar.</p>
-      <p>Cada pàgina de la litografia també porta una segona obra al seu marge, els Mujarrabāt del Shaykh al-Sanūsī. Aquesta també es tradueix aquí íntegrament.</p>
+      <h2>Què va deixar enrere</h2>
+      <p>Trenta-sis capítols i una conclusió. Hi al-Dayrabī recull les propietats que atribueix als versos alcorànics i als Noms Divins, juntament amb oracions, amulets, talismans, quadrats màgics i cures: la Fātiḥa i el Vers del Tron, la salvaguarda dels viatgers, el mal d'ull, la febre, el part i, al final, rareses que van des de sostenir el foc fins a treure taques de la roba.</p>
+      <p>Al capítol del mal d'ull hi consigna una història que havia recollit un estudiós anterior: un home del Khurāsān la mirada del qual, es deia, podia fer caure un camell. Aquest capítol constitueix la mostra gratuïta, cosa que permet sospesar el llibre abans de comprar-lo.</p>
+      <p>Filada pels marges de la litografia del Caire hi ha una segona obra, els Mujarrabāt del Shaykh al-Sanūsī, també traduïda aquí íntegrament. Al-Dayrabī va donar al seu propi llibre el títol de Fatḥ al-Malik al-Majīd, L'obertura del Rei Gloriós. Va morir el 1151 AH (1738 o 1739 CE).</p>
     </div>
   </section>
 
