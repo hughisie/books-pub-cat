@@ -425,7 +425,69 @@
     });
   }
 
+  /* ------------------------------------------------ Meta visitors' Amazon tags
+     7 Oct 2026 (Owen): the Shams video test on Meta, bought through Whop, sends people to the Shams page
+     rather than straight to Amazon, and is judged on Amazon orders. A visitor who lands on a Shams page
+     from one of those ads (our own utm_campaign below; Whop adds utm_source, utm_medium, utm_content and
+     its wacid/wasid/waid labels itself, and reserves them, so we do not key on those) gets the
+     "Meta via site" Amazon Attribution tags on that page and on every later page in the same tab
+     (sessionStorage, no cookie). Everyone else keeps the Site tags written in the page. Links are matched
+     by ASIN, so the es/ca pages are covered too. Nothing visible changes. An ASIN with no tag here keeps
+     whatever link the page has. Tags: 06. Books/ads-reviews/ATTRIBUTION-TAGS.md. */
+  var META_CAMPAIGNS = ["shams-video-oct26"];
+  var META_VIA_SITE = {
+    "B0H12C7HNN": "maas_adg_7B93A46116D2F012003B81C61C222DEF_afap_abs"   /* Meta via site Shams Kindle */
+  };
+  var VIA_KEY = "pubcat-books-via";
+
+  function landingParams() {
+    /* the query string, plus anything after a "?" inside the #fragment, in case an ad link was built as
+       /shams-al-maarif/#buy?utm_campaign=... */
+    var out = {};
+    var parts = [window.location.search.replace(/^\?/, "")];
+    var h = window.location.hash || "";
+    if (h.indexOf("?") > -1) parts.push(h.slice(h.indexOf("?") + 1));
+    parts.join("&").split("&").forEach(function (kv) {
+      if (!kv) return;
+      var i = kv.indexOf("=");
+      var k = i > -1 ? kv.slice(0, i) : kv;
+      var v = i > -1 ? kv.slice(i + 1) : "";
+      try { k = decodeURIComponent(k.replace(/\+/g, " ")); v = decodeURIComponent(v.replace(/\+/g, " ")); } catch (e) { return; }
+      if (!(k in out)) out[k] = v;
+    });
+    return out;
+  }
+
+  function fromMetaTest() {
+    var p = landingParams();
+    var c = String(p.utm_campaign || "").toLowerCase();
+    if (c && META_CAMPAIGNS.indexOf(c) > -1 && /\/shams-al-maarif\//.test(window.location.pathname)) {
+      try { window.sessionStorage.setItem(VIA_KEY, "meta:" + c); } catch (e) {}
+      return true;
+    }
+    try { return /^meta:/.test(window.sessionStorage.getItem(VIA_KEY) || ""); }
+    catch (e) { return false; }
+  }
+
+  function metaAmazonTags() {
+    /* a fragment that carries the query (#buy?utm_...) matches no id, so scroll to the named section */
+    var h = window.location.hash || "";
+    if (h.indexOf("?") > 1) {
+      var target = document.getElementById(h.slice(1, h.indexOf("?")));
+      if (target && target.scrollIntoView) { try { target.scrollIntoView(); } catch (e) {} }
+    }
+    if (!fromMetaTest()) return;
+    var links = document.querySelectorAll('a[href*="amazon.com/dp/"]');
+    Array.prototype.forEach.call(links, function (a) {
+      var m = /^https:\/\/www\.amazon\.com\/dp\/([A-Z0-9]{10})/.exec(a.getAttribute("href") || "");
+      var adg = m && META_VIA_SITE[m[1]];
+      if (!adg) return;
+      a.setAttribute("href", "https://www.amazon.com/dp/" + m[1] + "?maas=" + adg + "&ref_=aa_maas&tag=maas");
+    });
+  }
+
   function start() {
+    try { metaAmazonTags(); } catch (e) {}
     /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
        the id is the source value the server and the email sequences match on */
     Array.prototype.forEach.call(document.querySelectorAll('form[id^="signup"], form[id^="sample"]'), wireForm);
