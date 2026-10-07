@@ -436,7 +436,9 @@
      whatever link the page has. Tags: 06. Books/ads-reviews/ATTRIBUTION-TAGS.md. */
   var META_CAMPAIGNS = ["shams-video-oct26"];
   var META_VIA_SITE = {
-    "B0H12C7HNN": "maas_adg_7B93A46116D2F012003B81C61C222DEF_afap_abs"   /* Meta via site Shams Kindle */
+    "B0H12C7HNN": "maas_adg_7B93A46116D2F012003B81C61C222DEF_afap_abs",  /* Meta via site Shams Kindle */
+    "B0HHZL6SVS": "maas_adg_14B374BA87A08C2013173D28AE76A39C_afap_abs",  /* Meta via site Shams Vol1 Paperback */
+    "B0HJ3V5GVB": "maas_adg_4992BC2FE5F478E74200181F8D90458A_afap_abs"   /* Meta via site Shams Vol2 Paperback */
   };
   var VIA_KEY = "pubcat-books-via";
 
