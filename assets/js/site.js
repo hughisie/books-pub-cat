@@ -1,4 +1,4 @@
-/* books.pub.cat — email capture and the consent-gated advertising pixels.
+/* books.pub.cat: email capture and the consent-gated advertising pixels.
  *
  * Two rules this file exists to keep:
  *   1. The privacy page promises that visitors in the EU, the EEA, the UK and
@@ -119,6 +119,79 @@
   function flushHeld() {
     var q = heldEvents; heldEvents = [];
     q.forEach(function (ev) { track(ev[0], ev[1]); });
+    var m = heldMeta; heldMeta = [];
+    m.forEach(function (ev) { metaTrack(ev[0], ev[1], ev[2], ev[3]); });
+  }
+
+  /* ------------------------------------------ our own Meta pixel (12 Oct 2026)
+     Owen, 12 Oct: "We need to make Meta work." Same consent door as Whop's pixel:
+     nothing goes to Meta, browser or server, until the pixels are allowed, and
+     nothing at all while META_PIXEL_ID is empty. Events:
+       PageView          every page (sent by loadMetaPixel with an event id)
+       ViewContent       a book's own page, with the book's slug
+       AddToCart         a click on an Amazon or Whop buy link, with price and currency when known
+       AmazonBuyClick    custom event for the Amazon click itself (ASIN and store)
+       Lead              a sample sign-up
+     Each event carries an event id, and the same id goes to the Pub.Cat relay
+     (CAPI_ENDPOINT), which forwards it to Meta's Conversions API so Meta keeps one
+     copy. No email or other personal detail is sent: the relay adds only the
+     visitor's IP address and browser string, which Meta needs to match the event. */
+  var CAPI_ENDPOINT = "https://mcp.pub.cat/books/capi";
+  var heldMeta = [];
+  var BOOK_PAGES = {
+    "shams-al-maarif": "Shams al-Ma'arif",
+    "mujarrabat-al-dayrabi": "Mujarrabat al-Dayrabi",
+    "sleepy-hollow": "Sleepy Hollow",
+    "la-casa-defugida": "La casa defugida",
+    "sleepy-hollow-i-la-casa-defugida": "Sleepy Hollow i La casa defugida",
+    "dracula": "Dracula",
+    "el-monjo": "El monjo"
+  };
+  /* US list prices shown on the site (12 Oct 2026); an ASIN not here is sent without a value */
+  var ASIN_PRICE = {
+    "B0H12C7HNN": 12.99,   /* Shams complete Kindle */
+    "B0HHZL6SVS": 34.99,   /* Shams Vol One paperback */
+    "B0HJ3V5GVB": 34.99,   /* Shams Vol Two paperback */
+    "B0HL72MT4F": 9.99,    /* al-Dayrabi Kindle */
+    "B0HL8JCY6V": 24.99    /* al-Dayrabi paperback */
+  };
+
+  function bookSlug() {
+    var m = /^\/(?:es\/|ca\/)?([a-z0-9-]+)\/?$/.exec(window.location.pathname);
+    return m && BOOK_PAGES[m[1]] ? m[1] : "";
+  }
+  function readCookie(n) {
+    var m = new RegExp("(?:^|; )" + n + "=([^;]*)").exec(document.cookie || "");
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+  /* Meta's click id cookie format, built from the ad's fbclid when the pixel has not set _fbc yet */
+  function fbc() {
+    var c = readCookie("_fbc");
+    if (c) return c;
+    var click = currentClick();
+    return click.fbclid ? "fb.1." + Date.now() + "." + click.fbclid : "";
+  }
+  function relay(name, params, id) {
+    if (!CAPI_ENDPOINT || !META_PIXEL_ID) return;
+    var body = JSON.stringify({
+      event_name: name, event_id: id, event_source_url: window.location.href.split("#")[0],
+      custom_data: params || {}, fbp: readCookie("_fbp"), fbc: fbc()
+    });
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(CAPI_ENDPOINT, new Blob([body], { type: "text/plain" }))) return;
+      window.fetch(CAPI_ENDPOINT, { method: "POST", body: body, keepalive: true, credentials: "omit",
+        headers: { "Content-Type": "text/plain" } }).catch(function () {});
+    } catch (e) {}
+  }
+  /* standard: true for Meta's standard events, false for our custom ones */
+  function metaTrack(name, params, id, standard) {
+    if (!META_PIXEL_ID) return;
+    if (!(pixelsOn && window.fbq)) {
+      if (!consentDenied && heldMeta.length < 20) heldMeta.push([name, params, id, standard]);
+      return;
+    }
+    try { window.fbq(standard === false ? "trackCustom" : "track", name, params || {}, { eventID: id }); } catch (e) {}
+    relay(name, params, id);
   }
 
   /* Every visible string, per language (2 Oct 2026). The English is the copy that was
@@ -253,6 +326,7 @@
               who.event_id = signupId;
               track("complete_registration", who);
               track("lead", { event_id: signupId });
+              metaTrack("Lead", { content_name: form.id || "sample" }, signupId, true);
             }
             if (isSample && res.j && res.j.sample_url) {
               /* the server hands back the hosted PDF; show it right here rather
@@ -339,7 +413,12 @@
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     /* eslint-enable */
     window.fbq('init', META_PIXEL_ID);
-    window.fbq('track', 'PageView');
+    var pv = eventId("pv");
+    window.fbq('track', 'PageView', {}, { eventID: pv });
+    relay("PageView", {}, pv);
+    var slug = bookSlug();
+    if (slug) metaTrack("ViewContent", { content_ids: [slug], content_name: BOOK_PAGES[slug], content_type: "product" },
+      eventId("vc"), true);
   }
 
   /* Consent geography (Owen, 7 Sep 2026). A stored choice always wins. With no
@@ -355,7 +434,7 @@
     if (!META_PIXEL_ID && !WHOP_BIZ_ID) return;   /* nothing to consent to yet */
     var stored = readConsent();
     if (stored) {
-      if (stored === "granted") loadPixels(); else { consentDenied = true; heldEvents = []; }
+      if (stored === "granted") loadPixels(); else { consentDenied = true; heldEvents = []; heldMeta = []; }
       return;
     }
     var decided = false;
@@ -382,7 +461,7 @@
       a.addEventListener("click", function (ev) {
         ev.preventDefault();
         writeConsent("denied");
-        consentDenied = true; heldEvents = [];
+        consentDenied = true; heldEvents = []; heldMeta = [];
         var note = document.createElement("p");
         note.className = "small";
         note.setAttribute("role", "status");
@@ -409,7 +488,7 @@
       var choice = ev.target && ev.target.getAttribute("data-consent");
       if (!choice) return;
       writeConsent(choice);
-      if (choice !== "granted") { consentDenied = true; heldEvents = []; }
+      if (choice !== "granted") { consentDenied = true; heldEvents = []; heldMeta = []; }
       bar.parentNode.removeChild(bar);
       if (choice === "granted") loadPixels();
     });
@@ -620,6 +699,8 @@
           if (ad[k] && !url.searchParams.get(k)) url.searchParams.set(k, ad[k]);
         });
         a.href = url.toString();
+        metaTrack("AddToCart", { content_ids: [url.pathname.split("/")[2] || "whop"], content_type: "product",
+          content_category: "whop" }, eventId("wc"), true);
         return;
       }
 
@@ -635,12 +716,16 @@
       var id = eventId("az");
       track("add_to_cart", { event_id: id });
       track("amazon_click_" + host.split(".").slice(1).join(".") + "_" + asin, { event_id: id + "-x" });
+      var atc = { content_ids: [asin], content_type: "product", content_category: "amazon" };
+      if (host === "amazon.com" && ASIN_PRICE[asin]) { atc.value = ASIN_PRICE[asin]; atc.currency = "USD"; }
+      metaTrack("AddToCart", atc, id + "-m", true);
+      metaTrack("AmazonBuyClick", { asin: asin, store: host }, id + "-mx", false);
 
       /* give the pixel a moment to send before the page is left; new tabs and
          modified clicks need no wait */
       var plain = !ev.defaultPrevented && ev.button === 0 && !ev.metaKey && !ev.ctrlKey &&
         !ev.shiftKey && !ev.altKey && (a.target || "_self") === "_self";
-      if (plain && window.whop && pixelsOn) {
+      if (plain && (window.whop || window.fbq) && pixelsOn) {
         ev.preventDefault();
         var go = a.href;
         setTimeout(function () { window.location.href = go; }, 250);
