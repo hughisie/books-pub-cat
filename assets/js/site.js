@@ -1,4 +1,4 @@
-/* books.pub.cat — email capture and the consent-gated advertising pixels.
+/* books.pub.cat: email capture and the consent-gated advertising pixels.
  *
  * Two rules this file exists to keep:
  *   1. The privacy page promises that visitors in the EU, the EEA, the UK and
@@ -26,6 +26,173 @@
   var WHOP_BIZ_ID = "biz_l1sR4RzKzCfYlf";
 
   var STORE_KEY = "pubcat-books-consent";
+
+  /* ------------------------------------------------ measurement (6 Oct 2026)
+     Draft on branch tracking-2026-10-06, not live. What it adds:
+       1. The ad a reader came from. Whop's ad tool tags its links with
+          wacid (campaign), wasid (ad group) and waid (ad); with utm_* those are
+          campaign labels, not personal identifiers. They go with the sample
+          sign-up to our server, so each sign-up, and any later Whop sale by the
+          same email, can be tied to the ad that brought it.
+       2. The same labels are carried onto Whop checkout links, so a reader who
+          goes from our page to Whop still carries the ad's tags.
+       3. Buy-intent clicks to Amazon are reported to Whop's pixel as
+          "add_to_cart" plus a per-ASIN custom event, so Whop and Meta can see
+          (and later optimise for) people who head off to buy. Amazon itself
+          has no pixel, so this is the last thing we can see.
+       4. Visitors who arrived from a paid ad get a separate Amazon Attribution
+          tag when ATTRIB_PAID has one for that ASIN, so Meta-driven Amazon
+          sales stop being lumped in with everyone else's "Site" clicks.
+       5. A sign-up made before the visitor answers the consent banner is held
+          and sent if they then click Allow, instead of being lost.
+     Consent rule unchanged: nothing goes to Whop or Meta, and nothing is
+     stored in the browser, unless the advertising pixels are allowed. */
+  var AD_PARAMS = ["wacid", "wasid", "waid", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  var CLICK_ID_PARAMS = ["fbclid"];           /* person-level: only sent once the pixels are allowed */
+  var AD_KEY = "pubcat-books-ad";             /* sessionStorage, written only after consent */
+
+  /* ASIN -> Amazon Attribution "maas" value for readers who came from a paid ad.
+     Empty until Owen creates the ad groups in Amazon Attribution (free), e.g.
+     "Meta via site: Dayrabi Kindle". Until then the "Site ..." tags stay as they are. */
+  var ATTRIB_PAID = {};
+
+  /* Whop's pixel accepts the reader's email in plain text to match the event to
+     a Meta user (better match, better optimisation). Off until Owen decides and
+     the privacy page says so. */
+  var SEND_EMAIL_TO_WHOP = false;
+
+  var pixelsOn = false;        /* true once loadPixels() has run */
+  var consentDenied = false;   /* true once the visitor said no */
+  var heldEvents = [];         /* events waiting on the consent banner */
+
+  function paramsFrom(search, names) {
+    var out = {};
+    try {
+      var q = new URLSearchParams(search || "");
+      names.forEach(function (n) { var v = q.get(n); if (v) out[n] = v.slice(0, 120); });
+    } catch (e) {}
+    return out;
+  }
+  var LANDING_AD = paramsFrom(window.location.search, AD_PARAMS);
+  var LANDING_CLICK = paramsFrom(window.location.search, CLICK_ID_PARAMS);
+  function hasKeys(o) { for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) return true; return false; }
+
+  function storedAd() {
+    try { return JSON.parse(window.sessionStorage.getItem(AD_KEY) || "null") || {}; }
+    catch (e) { return {}; }
+  }
+  /* The ad labels for this visit: from this page's address, else from earlier in the visit. */
+  function currentAd() {
+    if (hasKeys(LANDING_AD)) return LANDING_AD;
+    var s = storedAd();
+    return s.ad || {};
+  }
+  function currentClick() {
+    if (!pixelsOn) return {};
+    if (hasKeys(LANDING_CLICK)) return LANDING_CLICK;
+    var s = storedAd();
+    return s.click || {};
+  }
+  function rememberAd() {
+    if (!hasKeys(LANDING_AD) && !hasKeys(LANDING_CLICK)) return;
+    try { window.sessionStorage.setItem(AD_KEY, JSON.stringify({ ad: LANDING_AD, click: LANDING_CLICK, page: window.location.pathname })); }
+    catch (e) {}
+  }
+  function fromPaidAd() {
+    var a = currentAd();
+    return !!(a.waid || a.wasid || a.wacid || /^(fb|ig|facebook|instagram|meta|whop)/i.test(a.utm_source || ""));
+  }
+
+  function eventId(prefix) {
+    return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+  }
+
+  /* One door to Whop's pixel: sends now, holds while the banner is unanswered,
+     drops if the visitor said no. */
+  function track(name, props) {
+    if (window.whop && pixelsOn) {
+      try { props ? window.whop.track(name, props) : window.whop.track(name); } catch (e) {}
+      return;
+    }
+    if (!consentDenied && heldEvents.length < 20) heldEvents.push([name, props]);
+  }
+  function flushHeld() {
+    var q = heldEvents; heldEvents = [];
+    q.forEach(function (ev) { track(ev[0], ev[1]); });
+    var m = heldMeta; heldMeta = [];
+    m.forEach(function (ev) { metaTrack(ev[0], ev[1], ev[2], ev[3]); });
+  }
+
+  /* ------------------------------------------ our own Meta pixel (12 Oct 2026)
+     Owen, 12 Oct: "We need to make Meta work." Same consent door as Whop's pixel:
+     nothing goes to Meta, browser or server, until the pixels are allowed, and
+     nothing at all while META_PIXEL_ID is empty. Events:
+       PageView          every page (sent by loadMetaPixel with an event id)
+       ViewContent       a book's own page, with the book's slug
+       AddToCart         a click on an Amazon or Whop buy link, with price and currency when known
+       AmazonBuyClick    custom event for the Amazon click itself (ASIN and store)
+       Lead              a sample sign-up
+     Each event carries an event id, and the same id goes to the Pub.Cat relay
+     (CAPI_ENDPOINT), which forwards it to Meta's Conversions API so Meta keeps one
+     copy. No email or other personal detail is sent: the relay adds only the
+     visitor's IP address and browser string, which Meta needs to match the event. */
+  var CAPI_ENDPOINT = "https://mcp.pub.cat/books/capi";
+  var heldMeta = [];
+  var BOOK_PAGES = {
+    "shams-al-maarif": "Shams al-Ma'arif",
+    "mujarrabat-al-dayrabi": "Mujarrabat al-Dayrabi",
+    "sleepy-hollow": "Sleepy Hollow",
+    "la-casa-defugida": "La casa defugida",
+    "sleepy-hollow-i-la-casa-defugida": "Sleepy Hollow i La casa defugida",
+    "dracula": "Dracula",
+    "el-monjo": "El monjo"
+  };
+  /* US list prices shown on the site (12 Oct 2026); an ASIN not here is sent without a value */
+  var ASIN_PRICE = {
+    "B0H12C7HNN": 12.99,   /* Shams complete Kindle */
+    "B0HHZL6SVS": 34.99,   /* Shams Vol One paperback */
+    "B0HJ3V5GVB": 34.99,   /* Shams Vol Two paperback */
+    "B0HL72MT4F": 9.99,    /* al-Dayrabi Kindle */
+    "B0HL8JCY6V": 24.99    /* al-Dayrabi paperback */
+  };
+
+  function bookSlug() {
+    var m = /^\/(?:es\/|ca\/)?([a-z0-9-]+)\/?$/.exec(window.location.pathname);
+    return m && BOOK_PAGES[m[1]] ? m[1] : "";
+  }
+  function readCookie(n) {
+    var m = new RegExp("(?:^|; )" + n + "=([^;]*)").exec(document.cookie || "");
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+  /* Meta's click id cookie format, built from the ad's fbclid when the pixel has not set _fbc yet */
+  function fbc() {
+    var c = readCookie("_fbc");
+    if (c) return c;
+    var click = currentClick();
+    return click.fbclid ? "fb.1." + Date.now() + "." + click.fbclid : "";
+  }
+  function relay(name, params, id) {
+    if (!CAPI_ENDPOINT || !META_PIXEL_ID) return;
+    var body = JSON.stringify({
+      event_name: name, event_id: id, event_source_url: window.location.href.split("#")[0],
+      custom_data: params || {}, fbp: readCookie("_fbp"), fbc: fbc()
+    });
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(CAPI_ENDPOINT, new Blob([body], { type: "text/plain" }))) return;
+      window.fetch(CAPI_ENDPOINT, { method: "POST", body: body, keepalive: true, credentials: "omit",
+        headers: { "Content-Type": "text/plain" } }).catch(function () {});
+    } catch (e) {}
+  }
+  /* standard: true for Meta's standard events, false for our custom ones */
+  function metaTrack(name, params, id, standard) {
+    if (!META_PIXEL_ID) return;
+    if (!(pixelsOn && window.fbq)) {
+      if (!consentDenied && heldMeta.length < 20) heldMeta.push([name, params, id, standard]);
+      return;
+    }
+    try { window.fbq(standard === false ? "trackCustom" : "track", name, params || {}, { eventID: id }); } catch (e) {}
+    relay(name, params, id);
+  }
 
   /* Every visible string, per language (2 Oct 2026). The English is the copy that was
      already live; Spanish and Catalan are DeepSeek's translations, written in here by
@@ -127,6 +294,7 @@
       if (!input || !input.value) return;
 
       var original = button ? button.textContent : "";
+      var signupId = eventId("su");
       if (button) { button.disabled = true; button.textContent = T("js_sending"); }
       note.hidden = false;
       note.textContent = "";
@@ -137,7 +305,13 @@
         body: JSON.stringify({
           email: input.value.trim(),
           website: pot.value,
-          source: form.id || "site"
+          source: form.id || "site",
+          /* which ad, page and click this sign-up came from (draft, 6 Oct 2026);
+             the server ignores fields it does not know until its own patch is in */
+          event_id: signupId,
+          page: window.location.pathname,
+          ad: currentAd(),
+          click: currentClick()
         })
       })
         .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
@@ -146,7 +320,14 @@
             form.hidden = true;
             try { document.dispatchEvent(new CustomEvent("pubcat:signedup")); } catch (e) {}
             var isSample = /^sample/.test(form.id || "");
-            if (window.whop && isSample) { try { window.whop.track("complete_registration"); window.whop.track("lead"); } catch (e) {} }
+            if (isSample) {
+              /* same event_id on both, so a later server-side copy can be de-duplicated */
+              var who = SEND_EMAIL_TO_WHOP ? { email: input.value.trim() } : {};
+              who.event_id = signupId;
+              track("complete_registration", who);
+              track("lead", { event_id: signupId });
+              metaTrack("Lead", { content_name: form.id || "sample" }, signupId, true);
+            }
             if (isSample && res.j && res.j.sample_url) {
               /* the server hands back the hosted PDF; show it right here rather
                  than promising an email that nothing sends yet */
@@ -185,6 +366,7 @@
                 note.appendChild(document.createElement("br"));
                 note.appendChild(nx);
               }
+              dl.addEventListener("click", function () { track("sample_opened", { event_id: signupId + "-open" }); });
               dl.focus();
             } else if (isSample) {
               note.textContent = T("js_no_link");
@@ -214,8 +396,11 @@
   }
 
   function loadPixels() {
+    pixelsOn = true;
     loadWhopPixel();
     loadMetaPixel();
+    rememberAd();
+    flushHeld();
   }
 
   function loadMetaPixel() {
@@ -228,7 +413,12 @@
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     /* eslint-enable */
     window.fbq('init', META_PIXEL_ID);
-    window.fbq('track', 'PageView');
+    var pv = eventId("pv");
+    window.fbq('track', 'PageView', {}, { eventID: pv });
+    relay("PageView", {}, pv);
+    var slug = bookSlug();
+    if (slug) metaTrack("ViewContent", { content_ids: [slug], content_name: BOOK_PAGES[slug], content_type: "product" },
+      eventId("vc"), true);
   }
 
   /* Consent geography (Owen, 7 Sep 2026). A stored choice always wins. With no
@@ -244,7 +434,7 @@
     if (!META_PIXEL_ID && !WHOP_BIZ_ID) return;   /* nothing to consent to yet */
     var stored = readConsent();
     if (stored) {
-      if (stored === "granted") loadPixels();
+      if (stored === "granted") loadPixels(); else { consentDenied = true; heldEvents = []; heldMeta = []; }
       return;
     }
     var decided = false;
@@ -271,6 +461,7 @@
       a.addEventListener("click", function (ev) {
         ev.preventDefault();
         writeConsent("denied");
+        consentDenied = true; heldEvents = []; heldMeta = [];
         var note = document.createElement("p");
         note.className = "small";
         note.setAttribute("role", "status");
@@ -297,6 +488,7 @@
       var choice = ev.target && ev.target.getAttribute("data-consent");
       if (!choice) return;
       writeConsent(choice);
+      if (choice !== "granted") { consentDenied = true; heldEvents = []; heldMeta = []; }
       bar.parentNode.removeChild(bar);
       if (choice === "granted") loadPixels();
     });
@@ -488,6 +680,59 @@
     });
   }
 
+  /* ------------------------------------------- outbound buy clicks (6 Oct 2026)
+     Amazon: report the buy-intent click to Whop's pixel, and swap in the paid-ad
+     Attribution tag when this visit came from an ad and one exists for the ASIN.
+     Whop checkout: carry the ad's wacid/wasid/waid onto the link (Whop records the
+     checkout and the purchase itself, so no event is fired for it). */
+  function outboundClicks() {
+    document.addEventListener("click", function (ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+      if (!a) return;
+      var url;
+      try { url = new URL(a.href); } catch (e) { return; }
+      var host = url.hostname.replace(/^www\./, "");
+      var ad = currentAd();
+
+      if (host === "whop.com" && /^\/checkout\//.test(url.pathname)) {
+        ["wacid", "wasid", "waid"].forEach(function (k) {
+          if (ad[k] && !url.searchParams.get(k)) url.searchParams.set(k, ad[k]);
+        });
+        a.href = url.toString();
+        metaTrack("AddToCart", { content_ids: [url.pathname.split("/")[2] || "whop"], content_type: "product",
+          content_category: "whop" }, eventId("wc"), true);
+        return;
+      }
+
+      if (!/^amazon\.(com|es|co\.uk|ca|de|fr|it)$/.test(host)) return;
+      var m = url.pathname.match(/\/dp\/([A-Z0-9]{10})/);
+      var asin = m ? m[1] : "unknown";
+      if (fromPaidAd() && ATTRIB_PAID[asin]) {
+        url.searchParams.set("maas", ATTRIB_PAID[asin]);
+        url.searchParams.set("ref_", "aa_maas");
+        url.searchParams.set("tag", "maas");
+        a.href = url.toString();
+      }
+      var id = eventId("az");
+      track("add_to_cart", { event_id: id });
+      track("amazon_click_" + host.split(".").slice(1).join(".") + "_" + asin, { event_id: id + "-x" });
+      var atc = { content_ids: [asin], content_type: "product", content_category: "amazon" };
+      if (host === "amazon.com" && ASIN_PRICE[asin]) { atc.value = ASIN_PRICE[asin]; atc.currency = "USD"; }
+      metaTrack("AddToCart", atc, id + "-m", true);
+      metaTrack("AmazonBuyClick", { asin: asin, store: host }, id + "-mx", false);
+
+      /* give the pixel a moment to send before the page is left; new tabs and
+         modified clicks need no wait */
+      var plain = !ev.defaultPrevented && ev.button === 0 && !ev.metaKey && !ev.ctrlKey &&
+        !ev.shiftKey && !ev.altKey && (a.target || "_self") === "_self";
+      if (plain && (window.whop || window.fbq) && pixelsOn) {
+        ev.preventDefault();
+        var go = a.href;
+        setTimeout(function () { window.location.href = go; }, 250);
+      }
+    }, true);
+  }
+
   function start() {
     try { metaAmazonTags(); } catch (e) {}
     /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
@@ -497,6 +742,7 @@
     optOutLinks();
     lightbox();
     stickyCta();
+    outboundClicks();
   }
 
   if (document.readyState === "loading") {
