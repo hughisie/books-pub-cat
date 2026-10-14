@@ -211,9 +211,10 @@ def cmd_extract():
 
 def localise_links(s, lang):
     p = "/" + lang
-    s = re.sub(r'href="/(?!assets/|/)', f'href="{p}/', s)
-    s = re.sub(r"(utm_medium=)([\w-]+)", lambda m: m.group(1) + m.group(2) + "-" + lang, s)
-    s = re.sub(r'(<form\b[^>]*\bid=")((?:signup|sample)[\w-]*)(")', lambda m: m.group(1) + m.group(2) + "-" + lang + m.group(3), s)
+    # skip links already carrying a language prefix (the translated book pages come back with /es/ or /ca/ in them)
+    s = re.sub(r'href="/(?!assets/|/|(?:%s)/)' % "|".join(LANGS), f'href="{p}/', s)
+    s = re.sub(r"(utm_medium=)([\w-]+)", lambda m: m.group(1) + (m.group(2) if m.group(2).endswith("-" + lang) else m.group(2) + "-" + lang), s)
+    s = re.sub(r'(<form\b[^>]*\bid=")((?:signup|sample)[\w-]*)(")', lambda m: m.group(1) + (m.group(2) if m.group(2).endswith("-" + lang) else m.group(2) + "-" + lang) + m.group(3), s)
     return s
 
 
