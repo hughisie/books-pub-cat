@@ -114,6 +114,8 @@ def page(title, desc, canon, og_img, og_type, body, extra_head=''):
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{canon}">
+<link rel="alternate" hreflang="en" href="{canon}">
+<link rel="alternate" hreflang="x-default" href="{canon}">
 <meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Pub.Cat Books">
 <meta property="og:title" content="{esc(title)}">
@@ -347,7 +349,7 @@ open(bi, 'w').write(t)
 sm = os.path.join(ROOT, 'sitemap.xml'); s = open(sm).read()
 s = re.sub(r'\s*<!-- blog:begin -->.*?<!-- blog:end -->', '', s, flags=re.S)
 urls = [(SITE + '/possessed/', '0.9'), (SITE + '/chiromancy/', '0.9'), (SITE + '/blog/', '0.7')] + [(f"{SITE}/blog/{a['slug']}/", '0.8') for a in arts]
-blk = '\n  <!-- blog:begin -->' + ''.join(f'\n  <url><loc>{u}</loc><lastmod>{DATE}</lastmod><priority>{p}</priority></url>' for u, p in urls) + '\n  <!-- blog:end -->'
+blk = '\n  <!-- blog:begin -->' + ''.join(f'\n  <url><loc>{u}</loc><lastmod>{DATE}</lastmod><priority>{p}</priority><xhtml:link rel="alternate" hreflang="en" href="{u}"/><xhtml:link rel="alternate" hreflang="x-default" href="{u}"/></url>' for u, p in urls) + '\n  <!-- blog:end -->'
 s = s.replace('</urlset>', blk + '\n</urlset>')
 open(sm, 'w').write(s)
 print('built', len(arts), 'articles')
