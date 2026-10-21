@@ -1,0 +1,19 @@
+{
+ "_about": "Whop buy links for the 21 Oct 2026 titles. Digital checkout links are for books.pub.cat buy buttons once the digital product is visible. Paperback checkout links are deliberately not here (products hidden).",
+ "titles": {
+  "possessed": {
+   "digital": {
+    "price_usd": "6.99",
+    "checkout": "https://whop.com/checkout/plan_wTSDKPIMZcZn7?utm_source=books.pub.cat&utm_medium=book-page&utm_campaign=possessed"
+   },
+   "paperback_hidden": "do not publish until Owen unhides the paperback products"
+  },
+  "chiromancy": {
+   "digital": {
+    "price_usd": "4.99",
+    "checkout": "https://whop.com/checkout/plan_DrPvDSwZs37Ml?utm_source=books.pub.cat&utm_medium=book-page&utm_campaign=chiromancy"
+   },
+   "paperback_hidden": "do not publish until Owen unhides the paperback products"
+  }
+ }
+}
