@@ -1,0 +1,42 @@
+/* Journal (blog) styles. Loaded after main.css; nothing here changes existing pages. */
+.post-hero{padding:4.5rem 0 2.2rem}
+.post-hero h1{max-width:20ch}
+.post-meta{font-family:var(--sans);font-size:.82rem;color:var(--parchment-dim);margin:0 0 1.4rem}
+.post-hero-img{margin:2rem 0 0;border:1px solid var(--ink-line)}
+.post-hero-img img{display:block;width:100%;height:auto;max-height:30rem;object-fit:cover;object-position:50% 30%}
+.post-body{padding:1rem 0 3rem;border-top:0}
+.post-body .wrap{max-width:42rem}
+.post-body h2{margin-top:3rem;font-size:clamp(1.5rem,3vw,1.95rem)}
+.post-body p{font-size:1.2rem}
+.post-body figure{margin:2.4rem 0;padding:0}
+.post-body figure img{display:block;width:100%;height:auto;border:1px solid var(--ink-line);background:var(--ink-raised)}
+.post-body figure.tall img{max-width:26rem;margin:0 auto}
+.post-body figcaption{font-family:var(--sans);font-size:.82rem;line-height:1.5;color:var(--parchment-dim);margin-top:.7rem;text-align:center}
+.post-cta{border-top:1px solid var(--ink-line);padding:3.2rem 0}
+.post-cta .wrap{max-width:42rem}
+.cta-box{display:flex;gap:1.6rem;align-items:flex-start;flex-wrap:wrap;background:var(--ink-raised);border:1px solid var(--ink-line);padding:1.6rem}
+.cta-box img{width:7.5rem;height:auto;border-radius:3px;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.cta-box .cta-copy{flex:1 1 15rem;min-width:0}
+.cta-box h2{font-size:1.5rem;margin-bottom:.3rem}
+.cta-box .btn{padding:.8rem 1.3rem}
+.post-credits{font-family:var(--sans);font-size:.8rem;color:var(--parchment-dim);line-height:1.6}
+.post-credits a{color:var(--parchment-dim)}
+.more-reading{padding:2.5rem 0 4rem;border-top:1px solid var(--ink-line)}
+.more-reading .wrap{max-width:42rem}
+.post-list{list-style:none;margin:2rem 0 0;padding:0;display:grid;gap:1.6rem}
+.post-card{display:grid;grid-template-columns:11rem 1fr;gap:1.4rem;align-items:start;padding:0;border:1px solid var(--ink-line);background:var(--ink-raised)}
+.post-card img{display:block;width:100%;height:100%;min-height:9rem;object-fit:cover}
+.post-card div{padding:1.2rem 1.3rem 1.2rem 0}
+.post-card h2{font-size:1.35rem;margin:0 0 .4rem}
+.post-card h2 a{color:var(--parchment);text-decoration:none}
+.post-card h2 a:hover{color:var(--gold)}
+.post-card p{margin:0 0 .5rem;font-size:1.02rem}
+.backlog{margin-top:3rem}
+.backlog li{margin-bottom:.4rem}
+@media (max-width:34rem){
+ .post-card{grid-template-columns:1fr}
+ .post-card div{padding:0 1.2rem 1.2rem}
+ .post-card img{height:11rem}
+ .post-hero{padding-top:3rem}
+ .post-body p{font-size:1.14rem}
+}
