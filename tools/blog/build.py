@@ -44,10 +44,25 @@ FOOT = '''<footer class="site-foot">
 </footer>
 <script src="/assets/js/site.js?v=20261007a" defer></script>'''
 
+# Intrinsic dimensions checked against the shipped WebP files.
+IMAGE_SIZES = {
+    'chiromancy-hand-1501-hundt': (1000, 1449),
+    'chiromancy-hand-1648-planets': (1000, 1490),
+    'chiromancy-hands-1648-lines': (1000, 1312),
+    'possessed-asmodeus-letter': (1000, 1451),
+    'possessed-clinical-lesson-1887': (1600, 1011),
+    'possessed-grandier-burned-1701': (1600, 1116),
+    'possessed-surin-isacaaron-1886': (1000, 1431),
+}
+
+def image_size(file):
+    width, height = IMAGE_SIZES[file]
+    return f'width="{width}" height="{height}"'
+
 def fig(f, hero=False):
     if not f: return ''
     cls = ' class="tall"' if f.get('tall') else ''
-    return (f'<figure{cls}><img src="/assets/img/blog/{f["file"]}.webp" alt="{esc(f["alt"])}" loading="lazy" decoding="async">'
+    return (f'<figure{cls}><img src="/assets/img/blog/{f["file"]}.webp" {image_size(f["file"])} alt="{esc(f["alt"])}" loading="lazy" decoding="async">'
             f'<figcaption>{esc(f["caption"])}</figcaption></figure>')
 
 def amazon(b, kind):
@@ -142,7 +157,7 @@ for a in arts:
     <p class="post-meta">By Pub.Cat Books · <time datetime="{DATE}">21st October 2026</time> · {max(1, round(len(re.sub('<[^>]+>', '', text).split()) / 220))} minute read</p>
     <p class="lede">{esc(a['description'])}</p>
   </div>
-  <div class="wrap" style="max-width:42rem"><figure class="post-hero-img{' tall' if a['hero'].get('tall') else ''}" style="margin:2rem 0 0"><img src="/assets/img/blog/{a['hero']['file']}.webp" alt="{esc(a['hero']['alt'])}" fetchpriority="high"><figcaption style="font-family:var(--sans);font-size:.82rem;color:var(--parchment-dim);padding:.6rem 0;text-align:center">{esc(a['hero']['caption'])}</figcaption></figure></div></section>
+  <div class="wrap" style="max-width:42rem"><figure class="post-hero-img{' tall' if a['hero'].get('tall') else ''}" style="margin:2rem 0 0"><img src="/assets/img/blog/{a['hero']['file']}.webp" {image_size(a['hero']['file'])} alt="{esc(a['hero']['alt'])}" fetchpriority="high"><figcaption style="font-family:var(--sans);font-size:.82rem;color:var(--parchment-dim);padding:.6rem 0;text-align:center">{esc(a['hero']['caption'])}</figcaption></figure></div></section>
   <section class="post-body"><div class="wrap">
 {text}
   <p class="post-credits">{esc(a['credits'])}</p>
@@ -165,7 +180,7 @@ for a in arts:
     open(os.path.join(d, 'index.html'), 'w').write(page(a['title'] + ' | Pub.Cat Books', a['description'], url, a['og'], 'article', body,
         '<script type="application/ld+json">\n' + schema(a, url) + '\n</script>\n'))
 
-cards = ''.join(f'''<li class="post-card"><a href="/blog/{a['slug']}/"><img src="/assets/img/blog/{a['hero']['file']}.webp" alt="{esc(a['hero']['alt'])}" loading="lazy"></a><div><p class="eyebrow">{esc(a['eyebrow'])}</p><h2><a href="/blog/{a['slug']}/">{esc(a['h1'])}</a></h2><p>{esc(a['description'])}</p></div></li>''' for a in arts)
+cards = ''.join(f'''<li class="post-card"><a href="/blog/{a['slug']}/"><img src="/assets/img/blog/{a['hero']['file']}.webp" {image_size(a['hero']['file'])} alt="{esc(a['hero']['alt'])}" loading="lazy"></a><div><p class="eyebrow">{esc(a['eyebrow'])}</p><h2><a href="/blog/{a['slug']}/">{esc(a['h1'])}</a></h2><p>{esc(a['description'])}</p></div></li>''' for a in arts)
 idx = f'''  <section class="post-hero"><div class="wrap" style="max-width:42rem"><p class="eyebrow">The Journal</p><h1>Stories behind the books</h1>
   <p class="lede">The people, places and arguments inside the old texts we publish, with the pictures and the quotations to match.</p>
   <ul class="post-list">{cards}</ul></div></section>'''
