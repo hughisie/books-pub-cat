@@ -8,13 +8,31 @@
    "h1": "Jeanne des Anges: the Loudun nun, in her own words",
    "description": "Urbain Grandier burned in 1634, but the prioress at the heart of the Loudun possessions wrote her own account. It is not what you would expect.",
    "eyebrow": "Loudun, 1632 to 1665",
-   "hero": {"file": "possessed-grandier-burned-1701", "alt": "Seventeenth-century etching of Urbain Grandier tied to a stake and burning in a crowded square at Loudun, soldiers and onlookers around him", "caption": "Urbain Grandier burned alive at Loudun, 1634. Etching attributed to Caspar Luyken, 1701. Rijksmuseum, Amsterdam (CC0)."},
+   "hero": {
+    "file": "possessed-grandier-burned-1701",
+    "alt": "Seventeenth-century etching of Urbain Grandier tied to a stake and burning in a crowded square at Loudun, soldiers and onlookers around him",
+    "caption": "Urbain Grandier burned alive at Loudun, 1634. Etching attributed to Caspar Luyken, 1701. Rijksmuseum, Amsterdam (CC0)."
+   },
    "og": "og-possessed-blog",
    "figures": {
     "FIG1": null,
-    "FIG2": {"file": "possessed-surin-isacaaron-1886", "tall": true, "alt": "Nineteenth-century engraving of Father Surin kneeling in a vaulted room as a horned, winged demon looms over him", "caption": "Father Surin and the demon Isacaaron. Victor Armand Poirson, 1886, for Figuier, Les Mystères de la science. Public domain, via Wikimedia Commons."},
-    "FIG3": {"file": "possessed-clinical-lesson-1887", "alt": "Painting of Dr Charcot demonstrating hysteria on a swooning woman patient to a packed hall of physicians at the Salpêtrière", "caption": "André Brouillet, A Clinical Lesson at the Salpêtrière, 1887. Charcot's school is the one that first printed Jeanne's text as a medical case. Public domain, via Wikimedia Commons."},
-    "FIG4": {"file": "possessed-asmodeus-letter", "tall": true, "alt": "Facsimile of a handwritten page in seventeenth-century French script, the so-called letter of the demon Asmodeus, written in Jeanne's own hand", "caption": "The \"letter of the demon Asmodeus\", written in Jeanne's own hand. Facsimile in the 1886 edition (University of Toronto copy, Internet Archive). Public domain."}
+    "FIG2": {
+     "file": "possessed-surin-isacaaron-1886",
+     "tall": true,
+     "alt": "Nineteenth-century engraving of Father Surin kneeling in a vaulted room as a horned, winged demon looms over him",
+     "caption": "Father Surin and the demon Isacaaron. Victor Armand Poirson, 1886, for Figuier, Les Mystères de la science. Public domain, via Wikimedia Commons."
+    },
+    "FIG3": {
+     "file": "possessed-clinical-lesson-1887",
+     "alt": "Painting of Dr Charcot demonstrating hysteria on a swooning woman patient to a packed hall of physicians at the Salpêtrière",
+     "caption": "André Brouillet, A Clinical Lesson at the Salpêtrière, 1887. Charcot's school is the one that first printed Jeanne's text as a medical case. Public domain, via Wikimedia Commons."
+    },
+    "FIG4": {
+     "file": "possessed-asmodeus-letter",
+     "tall": true,
+     "alt": "Facsimile of a handwritten page in seventeenth-century French script, the so-called letter of the demon Asmodeus, written in Jeanne's own hand",
+     "caption": "The \"letter of the demon Asmodeus\", written in Jeanne's own hand. Facsimile in the 1886 edition (University of Toronto copy, Internet Archive). Public domain."
+    }
    },
    "credits": "Pictures: Rijksmuseum (CC0); Wikimedia Commons (public domain); Internet Archive, University of Toronto copy of the 1886 edition (public domain). Quotations are from our translation of the 1886 French printing.",
    "book": {
@@ -26,16 +44,20 @@
     "blurb": "Jeanne des Anges's complete autobiography of the Loudun possessions, in English: her whole account, every extract from her later letters, an introduction, timeline, notes, glossary and period pictures.",
     "cover": "possessed-cover-640",
     "cover_alt": "Cover of Possessed: the Memoir of the Nun of Loudun, showing Jeanne des Anges's handwriting",
-    "page": "/books/",
+    "page": "/possessed/",
     "isbn_paperback": "9798164057800",
     "pages": 228,
-    "price_kindle": "6.99", "price_paperback": "16.99",
-    "kindle_url": "https://www.amazon.com/s?k=Possessed+Memoir+of+the+Nun+of+Loudun+Jeanne+des+Anges",
-    "paperback_url": "https://www.amazon.com/s?k=Possessed+Memoir+of+the+Nun+of+Loudun+Jeanne+des+Anges",
-    "whop_url": null,
-    "live": false
+    "price_kindle": "6.99",
+    "price_paperback": "16.99",
+    "live": true,
+    "asin_kindle": "B0HNSCFGJZ",
+    "asin_paperback": "B0HNSKXK32",
+    "whop_checkout": "https://whop.com/checkout/plan_wTSDKPIMZcZn7",
+    "slug": "possessed"
    },
-   "related": ["palmistry-history-1658-physician-tried-to-prove-it"]
+   "related": [
+    "palmistry-history-1658-physician-tried-to-prove-it"
+   ]
   },
   {
    "slug": "palmistry-history-1658-physician-tried-to-prove-it",
@@ -43,12 +65,27 @@
    "h1": "The physician who tried to prove palmistry",
    "description": "In 1653 a French court physician asked whether palmistry had any basis in medicine. His answer, printed in English in 1658, ends in a remarkable admission.",
    "eyebrow": "Paris 1653, London 1658",
-   "hero": {"file": "chiromancy-hand-1648-planets", "alt": "A hand drawn with the signs of the planets and the zodiac around it, from an English manuscript manual of palmistry dated 1648", "caption": "The hand as the palmists mapped it: an English manuscript manual of chiromancy dated 1648, ten years before this book. Wellcome Collection, CC BY 4.0.", "tall": true},
+   "hero": {
+    "file": "chiromancy-hand-1648-planets",
+    "alt": "A hand drawn with the signs of the planets and the zodiac around it, from an English manuscript manual of palmistry dated 1648",
+    "caption": "The hand as the palmists mapped it: an English manuscript manual of chiromancy dated 1648, ten years before this book. Wellcome Collection, CC BY 4.0.",
+    "tall": true
+   },
    "og": "og-chiromancy-blog",
    "figures": {
     "FIG1": null,
-    "FIG2": {"file": "chiromancy-hand-1501-hundt", "tall": true, "alt": "A palm with each finger named in Latin and marked with its planet, the lines of the palm labelled, hand-coloured woodcut of 1501", "caption": "The planets on the fingers as the palmists placed them: Jupiter on the forefinger, Saturn on the middle finger, the Sun on the third, Mercury on the little finger. Hand-coloured woodcut from Magnus Hundt, Antropologium (Leipzig, 1501). Wellcome Collection, CC BY 4.0."},
-    "FIG3": {"file": "chiromancy-hands-1648-lines", "tall": true, "alt": "Three hands with the principal lines named, including the line of life, the liver line and the table line, with the planets on the fingers", "caption": "The lines and the planets of the hand, from the same English manual of chiromancy dated 1648. Wellcome Collection, CC BY 4.0."}
+    "FIG2": {
+     "file": "chiromancy-hand-1501-hundt",
+     "tall": true,
+     "alt": "A palm with each finger named in Latin and marked with its planet, the lines of the palm labelled, hand-coloured woodcut of 1501",
+     "caption": "The planets on the fingers as the palmists placed them: Jupiter on the forefinger, Saturn on the middle finger, the Sun on the third, Mercury on the little finger. Hand-coloured woodcut from Magnus Hundt, Antropologium (Leipzig, 1501). Wellcome Collection, CC BY 4.0."
+    },
+    "FIG3": {
+     "file": "chiromancy-hands-1648-lines",
+     "tall": true,
+     "alt": "Three hands with the principal lines named, including the line of life, the liver line and the table line, with the planets on the fingers",
+     "caption": "The lines and the planets of the hand, from the same English manual of chiromancy dated 1648. Wellcome Collection, CC BY 4.0."
+    }
    },
    "credits": "Pictures: Wellcome Collection, licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). The 1658 book itself has no illustrations. Quotations are from the 1658 English translation, spelling modernised.",
    "book": {
@@ -60,16 +97,20 @@
     "blurb": "The whole 1658 English translation, modernised and annotated: a foreword, notes on every Article, a glossary of palmistry terms and seventeenth-century words, and a list of every correction to the 1658 printing.",
     "cover": "chiromancy-cover-640",
     "cover_alt": "Cover of The Principles of Chiromancy, with a hand drawing from a seventeenth-century manual",
-    "page": "/books/",
+    "page": "/chiromancy/",
     "isbn_paperback": "9798164051235",
     "pages": 82,
-    "price_kindle": "4.99", "price_paperback": "12.99",
-    "kindle_url": "https://www.amazon.com/s?k=The+Principles+of+Chiromancy+Cureau+de+La+Chambre",
-    "paperback_url": "https://www.amazon.com/s?k=The+Principles+of+Chiromancy+Cureau+de+La+Chambre",
-    "whop_url": null,
-    "live": false
+    "price_kindle": "4.99",
+    "price_paperback": "12.99",
+    "live": false,
+    "asin_kindle": null,
+    "asin_paperback": null,
+    "whop_checkout": "https://whop.com/checkout/plan_DrPvDSwZs37Ml",
+    "slug": "chiromancy"
    },
-   "related": ["jeanne-des-anges-loudun-nun-own-story"]
+   "related": [
+    "jeanne-des-anges-loudun-nun-own-story"
+   ]
   }
  ]
 }

@@ -294,6 +294,7 @@ def head(b, lang, title, desc, url, ld):
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=1)}
 </script>
+<script defer data-domain="books.pub.cat" src="https://analytics.pub.cat/js/script.outbound-links.file-downloads.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>

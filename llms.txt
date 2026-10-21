@@ -11,7 +11,9 @@
   EPUB formats.
 
 - [Mujarrabāt al-Dayrabī](https://books.pub.cat/mujarrabat-al-dayrabi/): what appears to be the earliest rendering in English of the eighteenth-century Cairo handbook of tested remedies by Aḥmad ibn ʿUmar al-Dayrabī, along with the Mujarrabāt of al-Sanūsī as printed in its margin. Available as digital (PDF and EPUB), Kindle and paperback editions.
-- [Journal](https://books.pub.cat/blog/): articles on the history behind our titles, including [Jeanne des Anges: the Loudun nun in her own words](https://books.pub.cat/blog/jeanne-des-anges-loudun-nun-own-story/) and [the physician who tried to prove palmistry](https://books.pub.cat/blog/palmistry-history-1658-physician-tried-to-prove-it/).
+- [Journal](https://books.pub.cat/blog/): articles on the history behind our titles, including [Jeanne des Anges: the Loudun nun in her own words](https://books.pub.cat/blog/jeanne-des-anges-loudun-nun-own-story/).
+- [Possessed: The Memoir of the Nun of Loudun](https://books.pub.cat/possessed/): complete English translation of the autobiography of Jeanne des Anges.
+- [The Principles of Chiromancy](https://books.pub.cat/chiromancy/): the 1658 English palmistry text of Marin Cureau de La Chambre, modernised and annotated.
 - [Books](https://books.pub.cat/books/): the complete list, covering all formats and prices.
 
 ## Languages
