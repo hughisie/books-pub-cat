@@ -214,6 +214,9 @@ BOOKMETA = {
 
 def book_page(a):
     b = a['book']; m = BOOKMETA[b['slug']]; slug = b['slug']; url = f"{SITE}/{slug}/"
+    m = dict(m)
+    if slug == 'chiromancy' and amazon(b, 'kindle') and amazon(b, 'paperback'):
+        m['meta'] = m['meta'].replace('Digital edition now; Kindle and paperback coming to Amazon.', 'Digital edition, Kindle and paperback.')
     body_html = open(os.path.join(ROOT, 'tools/blog/book-body', slug + '.html')).read()
     k, pb = amazon(b, 'kindle'), amazon(b, 'paperback')
     wurl = whop(b, 'book-page')
