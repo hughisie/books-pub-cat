@@ -378,4 +378,10 @@
     <xhtml:link rel="alternate" hreflang="ca" href="https://books.pub.cat/ca/sleepy-hollow-i-la-casa-defugida/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://books.pub.cat/sleepy-hollow-i-la-casa-defugida/"/>
   </url>
+
+  <!-- blog:begin -->
+  <url><loc>https://books.pub.cat/blog/</loc><lastmod>2026-10-21</lastmod><priority>0.7</priority></url>
+  <url><loc>https://books.pub.cat/blog/jeanne-des-anges-loudun-nun-own-story/</loc><lastmod>2026-10-21</lastmod><priority>0.8</priority></url>
+  <url><loc>https://books.pub.cat/blog/palmistry-history-1658-physician-tried-to-prove-it/</loc><lastmod>2026-10-21</lastmod><priority>0.8</priority></url>
+  <!-- blog:end -->
 </urlset>
