@@ -189,7 +189,7 @@ BOOKMETA = {
     role='Translator', role_note='Translated from the 1886 French printing of the Tours manuscript.', paper='228 pages, 6 x 9 in (152 x 229 mm)',
     short_card='The complete autobiography of the prioress at the centre of the Loudun possessions, complete in English: her whole account, her later letters, an introduction, a timeline, notes and a glossary.'),
  'chiromancy': dict(eyebrow='Marin Cureau de La Chambre', lede='The 1658 English text, modernised, with a foreword, notes and a glossary.',
-    meta='The Principles of Chiromancy by Marin Cureau de La Chambre: the 1658 English palmistry text, modernised, with a foreword, notes and a glossary. Digital edition now; Kindle and paperback coming to Amazon.',
+    meta='The Principles of Chiromancy by Marin Cureau de La Chambre: the 1658 English palmistry text, modernised, with a foreword, notes and a glossary. Digital edition, Kindle and paperback.',
     og='og-chiromancy-blog', year='Paris 1653; English translation 1658',
     role='Editor', role_note='Modernised from the anonymous 1658 English translation.', paper='82 pages, 6 x 9 in (152 x 229 mm)',
     short_card='A court physician asks whether palmistry has any basis in medicine. The 1658 English translation, modernised, with a foreword, notes on every Article and a glossary.'),

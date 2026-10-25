@@ -102,9 +102,9 @@
     "pages": 82,
     "price_kindle": "4.99",
     "price_paperback": "12.99",
-    "live": false,
-    "asin_kindle": null,
-    "asin_paperback": null,
+    "live": true,
+    "asin_kindle": "B0HNTSFQ9B",
+    "asin_paperback": "B0HNVPVH5M",
     "whop_checkout": "https://whop.com/checkout/plan_DrPvDSwZs37Ml",
     "slug": "chiromancy"
    },
