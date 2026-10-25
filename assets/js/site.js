@@ -488,8 +488,89 @@
     });
   }
 
+  /* ------------------------------------------------------ Plausible events
+     25 Oct 2026. The counter script on every page (analytics.pub.cat) already records page views and
+     outbound clicks. These two named events say which book was looked at and which buy button was
+     pressed, so the funnel can be read in Plausible:
+       "View Book"  once per book-page load, prop title = the page slug
+       "Click Buy"  every buy button, props title (book slug) and channel
+                    (amazon-kindle, amazon-paperback, whop, etsy)
+     Plain plausible("Event", {props}) calls. If the script is blocked the calls do nothing. */
+  var ASIN_INFO = {
+    "B0H12C7HNN": ["shams-al-maarif", "amazon-kindle"],
+    "B0HKKLSR95": ["shams-al-maarif", "amazon-kindle"],
+    "B0HKKNVD36": ["shams-al-maarif", "amazon-kindle"],
+    "B0HHZL6SVS": ["shams-al-maarif", "amazon-paperback"],
+    "B0HJ3V5GVB": ["shams-al-maarif", "amazon-paperback"],
+    "B0HL72MT4F": ["mujarrabat-al-dayrabi", "amazon-kindle"],
+    "B0HL8JCY6V": ["mujarrabat-al-dayrabi", "amazon-paperback"],
+    "B0HNSCFGJZ": ["possessed", "amazon-kindle"],
+    "B0HNSKXK32": ["possessed", "amazon-paperback"],
+    "B0HNTSFQ9B": ["chiromancy", "amazon-kindle"],
+    "B0HNVPVH5M": ["chiromancy", "amazon-paperback"]
+  };
+  var CAMPAIGN_TITLE = { "shams": "shams-al-maarif", "dayrabi": "mujarrabat-al-dayrabi" };
+
+  function track(name, props) {
+    try {
+      if (!window.plausible) {
+        window.plausible = function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+      }
+      window.plausible(name, { props: props });
+    } catch (e) {}
+  }
+
+  function pageSlug() {
+    var parts = window.location.pathname.replace(/^\/(es|ca)(?=\/)/, "").split("/").filter(Boolean);
+    return parts.length === 1 ? parts[0] : "";
+  }
+
+  function viewBook() {
+    var slug = pageSlug();
+    if (!slug) return;
+    var isBook = Array.prototype.some.call(document.querySelectorAll('script[type="application/ld+json"]'), function (n) {
+      return /"@type":\s*"Book"/.test(n.textContent || "");
+    });
+    if (isBook) track("View Book", { title: slug });
+  }
+
+  function buyInfo(a) {
+    var href = a.getAttribute("href") || "";
+    var title = "", channel = "";
+    var m = /amazon\.com\/dp\/([A-Z0-9]{10})/.exec(href);
+    if (m) {
+      var info = ASIN_INFO[m[1]];
+      if (info) { title = info[0]; channel = info[1]; }
+      else channel = /paperback|rústica|rustica/i.test(a.textContent || "") ? "amazon-paperback" : "amazon-kindle";
+    } else if (/whop\.com\/checkout/.test(href)) {
+      channel = "whop";
+      var c = /[?&]utm_campaign=([^&#]+)/.exec(href);
+      if (c) { var k = c[1].replace(/-(ca|es)$/, ""); title = CAMPAIGN_TITLE[k] || k; }
+    } else if (/(^|\.)etsy\.com\//.test(href.replace(/^https?:\/\//, ""))) {
+      channel = "etsy";
+    }
+    if (!channel) return null;
+    if (!title) {
+      var card = a.closest ? a.closest(".book-card") : null;
+      var cover = card && card.querySelector("a.book-cover");
+      var cm = cover && /^\/(?:(?:es|ca)\/)?([^\/]+)\/$/.exec(cover.getAttribute("href") || "");
+      title = (cm && cm[1]) || pageSlug() || "unknown";
+    }
+    return { title: title, channel: channel };
+  }
+
+  function buyClicks() {
+    document.addEventListener("click", function (ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest("a[href]") : null;
+      if (!a) return;
+      var info = buyInfo(a);
+      if (info) track("Click Buy", info);
+    }, true);
+  }
+
   function start() {
     try { metaAmazonTags(); } catch (e) {}
+    try { viewBook(); buyClicks(); } catch (e) {}
     /* form ids carry a language suffix on /es/ and /ca/ (signup-es, sample-dayrabi-ca);
        the id is the source value the server and the email sequences match on */
     Array.prototype.forEach.call(document.querySelectorAll('form[id^="signup"], form[id^="sample"]'), wireForm);

@@ -10,7 +10,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 cfg = json.load(open(os.path.join(ROOT, 'tools/blog/articles.json')))
 SITE = cfg['site']; DATE = cfg['published']
 esc = lambda s: html.escape(s, quote=True)
-TAG = '<script defer data-domain="books.pub.cat" src="https://analytics.pub.cat/js/script.outbound-links.file-downloads.js"></script>\n'
+TAG = '<script async data-domain="books.pub.cat" src="https://analytics.pub.cat/js/script.outbound-links.file-downloads.js"></script>\n'
 CSS = '<link rel="stylesheet" href="/assets/css/main.css?v=20261007a">\n<link rel="stylesheet" href="/assets/css/blog.css?v=20261021a">'
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">')
@@ -42,7 +42,7 @@ FOOT = '''<footer class="site-foot">
     </div>
   </div>
 </footer>
-<script src="/assets/js/site.js?v=20261007a" defer></script>'''
+<script src="/assets/js/site.js?v=20261025a" defer></script>'''
 
 def fig(f, hero=False):
     if not f: return ''
