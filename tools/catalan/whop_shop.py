@@ -40,7 +40,7 @@ POSTAGE = {
     "EUR": {"ES": "6.99", "EU": "7.99", "UK": "6.99", "US": "8.99"},
     "USD": {"ES": "8.99", "EU": "8.99", "UK": "8.99", "US": "8.99"},
 }
-POSTAGE_HEAVY_USD = {"ES": "9.99", "EU": "9.99", "UK": "9.99", "US": "9.99"}   # Shams volumes, 688 to 755 pages
+POSTAGE_HEAVY_USD = {"ES": "9.99", "EU": "9.99", "UK": "9.99", "US": "9.99"}   # Shams volumes, 690 to 755 pages
 
 # region -> KDP marketplace that prints and posts the author copy (country-level override in the server)
 REGION_MARKET = {"ES": "es", "EU": "de", "UK": "co.uk", "US": "com"}
