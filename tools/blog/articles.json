@@ -131,7 +131,8 @@
    "live": true,
    "asin_kindle": "B0HN7P547J",
    "asin_paperback": "B0HN857YQW",
-   "whop_checkout": null,
+   "whop_checkout": "https://whop.com/checkout/plan_w1lC2nR9OsX4r",
+   "price_digital": "6.99",
    "slug": "book-of-the-cook",
    "date": "2026-10-30"
   }
