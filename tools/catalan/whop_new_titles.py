@@ -20,7 +20,7 @@ ACCOUNT = "biz_l1sR4RzKzCfYlf"
 POSTAGE = "8.99"
 REGION = {"ES": "Spain", "EU": "Another EU country", "UK": "United Kingdom", "US": "United States"}
 MARKET = {"ES": "es", "EU": "de", "UK": "co.uk", "US": "com"}
-AI_LINE = "Prepared with the assistance of AI and edited by the publisher."
+AI_LINE = "Translated using cutting-edge AI technology and edited by the publisher."
 DELIVER = ("Amazon KDP produces each copy only once it has been ordered and ships it straight to you, which means it "
            "turns up in an Amazon parcel. Allow one to three weeks for it to arrive.")
 

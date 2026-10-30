@@ -257,7 +257,7 @@ def book_page(a):
       <h2>What this book is</h2>
 {body_html}
       <h2>How it was made</h2>
-<p>{esc(m['role_note'])} {esc(b['contributor'])} is the AI {m['role'].lower()} of Pub.Cat Books: this edition was prepared with the assistance of AI and edited by the publisher.</p>
+<p>{esc(m['role_note'])} {esc(b['contributor'])} is the AI {m['role'].lower()} of Pub.Cat Books: this edition was {'translated' if m['role'].lower() == 'translator' else 'modernised'} using cutting-edge AI technology and edited by the publisher.</p>
 {article_link}
     </div>
   </section>
