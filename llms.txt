@@ -14,6 +14,7 @@
 - [Journal](https://books.pub.cat/blog/): articles on the history behind our titles, including [Jeanne des Anges: the Loudun nun in her own words](https://books.pub.cat/blog/jeanne-des-anges-loudun-nun-own-story/).
 - [Possessed: The Memoir of the Nun of Loudun](https://books.pub.cat/possessed/): complete English translation of the autobiography of Jeanne des Anges.
 - [The Principles of Chiromancy](https://books.pub.cat/chiromancy/): the 1658 English palmistry text of Marin Cureau de La Chambre, modernised and annotated.
+- [The Book of the Cook](https://books.pub.cat/book-of-the-cook/): the first English translation from the Catalan that we have been able to trace of Master Robert's Llibre del Coch, the Barcelona cookery book of 1520.
 - [Books](https://books.pub.cat/books/): the complete list, covering all formats and prices.
 
 ## Languages

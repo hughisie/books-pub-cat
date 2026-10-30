@@ -507,7 +507,9 @@
     "B0HNSCFGJZ": ["possessed", "amazon-kindle"],
     "B0HNSKXK32": ["possessed", "amazon-paperback"],
     "B0HNTSFQ9B": ["chiromancy", "amazon-kindle"],
-    "B0HNVPVH5M": ["chiromancy", "amazon-paperback"]
+    "B0HNVPVH5M": ["chiromancy", "amazon-paperback"],
+    "B0HN7P547J": ["book-of-the-cook", "amazon-kindle"],
+    "B0HN857YQW": ["book-of-the-cook", "amazon-paperback"]
   };
   var CAMPAIGN_TITLE = { "shams": "shams-al-maarif", "dayrabi": "mujarrabat-al-dayrabi" };
 

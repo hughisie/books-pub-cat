@@ -112,5 +112,28 @@
     "jeanne-des-anges-loudun-nun-own-story"
    ]
   }
+ ],
+ "books_only": [
+  {
+   "name": "The Book of the Cook",
+   "short": "The Book of the Cook",
+   "author": "Mestre Robert (Rupert de Nola)",
+   "contributor": "Clement Ashdown",
+   "contributor_role": "translator",
+   "blurb": "The Book of the Cook, the first English translation from the Catalan that we have been able to trace of Master Robert's Llibre del Coch, the Barcelona cookery book of 1520. Available in Kindle and paperback.",
+   "cover": "book-of-the-cook-cover-640",
+   "cover_alt": "Cover of The Book of the Cook: a woodcut of a cook stirring a pot over an open fire, with the title in black capitals on a cream ground",
+   "page": "/book-of-the-cook/",
+   "isbn_paperback": "9798162702160",
+   "pages": 222,
+   "price_kindle": "9.99",
+   "price_paperback": "19.99",
+   "live": true,
+   "asin_kindle": "B0HN7P547J",
+   "asin_paperback": "B0HN857YQW",
+   "whop_checkout": null,
+   "slug": "book-of-the-cook",
+   "date": "2026-10-30"
+  }
  ]
 }
