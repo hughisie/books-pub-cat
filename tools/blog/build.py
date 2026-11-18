@@ -192,7 +192,7 @@ BOOKMETA = {
  'book-of-the-cook': dict(eyebrow='Mestre Robert (Rupert de Nola)', lede='The earliest cookery book known to have been printed in Catalan, now rendered into English from the Catalan, complete with a foreword, notes and a glossary.',
     meta="The Book of the Cook, the first English translation from the Catalan that we have been able to trace of Master Robert's Llibre del Coch, the Barcelona cookery book of 1520. Available in Kindle and paperback.",
     og='og-book-of-the-cook-blog', year='Barcelona, 1520 (in Catalan)',
-    role='Translator', role_note=None, paper='222 pages', trim=False, formats='Digital, Kindle, Paperback',
+    role='Translator', role_note=None, paper='222 pages', trim=False, formats='Kindle, Paperback', digital=False,
     how_made='Translated using cutting-edge AI technology and edited by the publisher.',
     short_card='The first cookery book printed in Catalan, published in Barcelona in 1520, now rendered into English from the Catalan, complete with a foreword, over two hundred notes and a glossary.',
     gallery_intro='Thirteen paintings and engravings in the public domain from the era, ranging from The Peasant Wedding to The Bean Eater. Click on any image to view it at a larger size.',
@@ -240,7 +240,7 @@ def book_page(a):
         </div>
 '''
     else:
-        digital_box = '        <!-- WHOP_CHECKOUT_URL: digital edition buybox goes here once the Whop checkout exists (copy the Digital buybox from /possessed/, set the price and the link) -->\n'
+        digital_box = ''
     gallery = ''
     if m.get('gallery'):
         figs = ''.join(f'<figure><a class="zoom" href="/assets/img/{slug}/{f}-1400.webp" data-caption="{esc(cap)}"><img src="/assets/img/{slug}/{f}-640.webp" alt="{esc(alt)}" loading="lazy" decoding="async"></a><figcaption>{esc(cap)}</figcaption></figure>\n' for f, cap, alt in m['gallery'])
@@ -259,16 +259,18 @@ def book_page(a):
           "inLanguage": "en", "publisher": {"@type": "Organization", "name": "Pub.Cat Books"},
           "image": f"{SITE}/assets/img/{slug}-cover-1200.webp", "description": m['meta'],
           "workExample": [
-            {"@type": "Book", "bookFormat": "https://schema.org/EBook", "name": b['name'] + " (digital edition)",
-             "offers": {"@type": "Offer", "price": b.get('price_digital') or b['price_kindle'], "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": wurl}},
             {"@type": ["Book", "Product"], "bookFormat": "https://schema.org/Paperback", "name": b['name'] + " (paperback)",
              "isbn": b['isbn_paperback'], "gtin13": b['isbn_paperback'], "numberOfPages": b['pages']}]}
+    if has_digital:
+        ld["workExample"].insert(0, {"@type": "Book", "bookFormat": "https://schema.org/EBook", "name": b['name'] + " (digital edition)",
+             "offers": {"@type": "Offer", "price": b.get('price_digital') or b['price_kindle'], "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": wurl}})
     if k:
         ld["workExample"].append({"@type": "Book", "bookFormat": "https://schema.org/EBook", "name": b['name'] + " (Kindle)",
             "offers": {"@type": "Offer", "price": b['price_kindle'], "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": k}})
     if pb:
-        ld["workExample"][1]["sameAs"] = pb
-        ld["workExample"][1]["offers"] = {"@type": "Offer", "price": b['price_paperback'], "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": pb}
+        pbw = [w for w in ld["workExample"] if w["bookFormat"].endswith("Paperback")][0]
+        pbw["sameAs"] = pb
+        pbw["offers"] = {"@type": "Offer", "price": b['price_paperback'], "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": pb}
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Pub.Cat Books", "item": SITE + "/"},
         {"@type": "ListItem", "position": 2, "name": "Books", "item": SITE + "/books/"},

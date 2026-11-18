@@ -21,10 +21,6 @@
       "cover_w": 400,
       "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
       "description_md": "titles/dracula-ca/public/description.md",
-      "ebook": {
-        "plan": "plan_vnM3E2BO9EqyN",
-        "price": "3.80"
-      },
       "kindle": {
         "asin": "B0HLR6XR81",
         "price": "3.99"
@@ -49,10 +45,6 @@
       "cover_w": 400,
       "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
       "description_md": "titles/the-monk-ca/public/description.md",
-      "ebook": {
-        "plan": "plan_BNLVi8HoBSLax",
-        "price": "4.75"
-      },
       "kindle": {
         "asin": "B0HLY1R18Q",
         "price": "4.99"
@@ -77,10 +69,6 @@
       "cover_w": 400,
       "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
       "description_md": "titles/sleepy-hollow-ca/public/description.md",
-      "ebook": {
-        "plan": "plan_5aaejliSBLla0",
-        "price": "2.56"
-      },
       "kindle": {
         "asin": "B0HLXLNXMV",
         "price": "2.69"
@@ -98,9 +86,9 @@
       "cover_w": 400,
       "lede_ca": "Traducció catalana íntegra, amb pròleg nou.",
       "description_md": "titles/shunned-house-ca/public/description.md",
-      "ebook": {
-        "plan": "plan_hucG9iD9Mi7JL",
-        "price": "3.32"
+      "kindle": {
+        "asin": "B0HN2ZZ4SG",
+        "price": "2.69"
       },
       "paperback_in": "sleepy-hollow-i-la-casa-defugida"
     },
